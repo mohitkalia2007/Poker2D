@@ -40,50 +40,5 @@ namespace BaseGame
         {
             throw new NotImplementedException();
         }
-
-        protected override int FindPair()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override int FindTwoPair()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override int FindThreeOfKind()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override int FindStraight()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override string FindFlush()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override int FindFullHouse()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override int FindFourOfKind()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override int FindStraightFlush()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override bool HasRoyalFlush()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
