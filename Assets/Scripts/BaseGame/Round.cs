@@ -9,6 +9,7 @@ namespace BaseGame
     {
         private readonly System.Random random = new System.Random();
         public HumanPlayer humanPlayer;
+        public int minimumBet = 0;
         private string[] suit = { "diamond", "spade", "heart", "club" };
         private List<Player> players;
         private PokerCard[] houseHand = new PokerCard[5];
