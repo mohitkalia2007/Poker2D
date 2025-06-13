@@ -10,7 +10,7 @@ namespace BaseGame
     {
         int balance;
         protected bool areCardsShowing = false;
-        CardsManager cardsManager = new CardsManager();
+        //CardsManager cardsManager = new CardsManager();
         protected bool inGame = true;
         protected PokerCard[] cards = new PokerCard[2];
         private bool isTurn;
