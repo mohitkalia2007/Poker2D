@@ -10,7 +10,6 @@ namespace BaseGame
     {
         int balance;
         protected bool areCardsShowing = false;
-        CardsManager cardsManager = new CardsManager();
         protected bool inGame = true;
         protected PokerCard[] cards = new PokerCard[2];
         private bool isTurn;
@@ -26,7 +25,6 @@ namespace BaseGame
             set
             {
                 if (value.Length == 2) cards = value;
-                ///foreach (PokerCard card in cards) cardsManager.AddCard(card);
             }
         }
         public int Balance { get { return balance; } set { balance = value; } }
@@ -73,7 +71,7 @@ namespace BaseGame
         }
         
         public void Check() { LastAction = PlayerAction.Check; CurrentBet = 0; }
-        public abstract void MakeBet(PokerGame.BettingRound bettingRound);
+        public abstract int MakeBet(PokerGame.BettingRound bettingRound);
         protected abstract int GetHighestCard();
     }
 }
