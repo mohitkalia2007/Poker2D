@@ -10,6 +10,7 @@ namespace BaseGame
     {
         int balance;
         protected bool areCardsShowing = false;
+        CardsManager cardsManager = new CardsManager();
         protected bool inGame = true;
         protected PokerCard[] cards = new PokerCard[2];
         private bool isTurn;
@@ -74,14 +75,5 @@ namespace BaseGame
         public void Check() { LastAction = PlayerAction.Check; CurrentBet = 0; }
         public abstract void MakeBet(PokerGame.BettingRound bettingRound);
         protected abstract int GetHighestCard();
-        protected abstract int FindPair();
-        protected abstract int FindTwoPair();
-        protected abstract int FindThreeOfKind();
-        protected abstract int FindStraight();
-        protected abstract string FindFlush();
-        protected abstract int FindFullHouse();
-        protected abstract int FindFourOfKind();
-        protected abstract int FindStraightFlush(); 
-        protected abstract bool HasRoyalFlush();
     }
 }
