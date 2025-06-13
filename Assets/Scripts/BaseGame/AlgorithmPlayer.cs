@@ -19,17 +19,17 @@ namespace BaseGame
         {
             this.round = round;
         }
-        public override void MakeBet(PokerGame.BettingRound bettingRound) // Makes a bet based on effective hand strength, pot size, and amount of time spent 
+        public override int MakeBet(PokerGame.BettingRound bettingRound) // Makes a bet based on effective hand strength, pot size, and amount of time spent 
         {
         // Calculate effective hand strength based on current cards
         double ehs = EffectiveHS(bettingRound);
-        
+
         // Get pot size and number of active players
-        int potSize = TotalPot();
-        int activePlayers = bettingRound.Players.Count(p => p.IsActive);
-        
+        int potSize = 10; //TotalPot();
+        int activePlayers = 5; //bettingRound.Players.Count(p => p.IsActive);
+
         // Get minimum bet required to call
-        int minBet = bettingRound.GetMinBet();
+        int minBet = 0; //bettingRound.GetMinBet();
         
         // Conservative baseline strategy based on EHS, pot odds and number of players
         if (ehs > 0.8) // Very strong hand
@@ -68,7 +68,7 @@ namespace BaseGame
             // Hand potential array, each index represents ahead, tied, and behind
             int[,] HP = new int[3, 3]; 
             int[] HPTotal = new int[3];
-            int ourrank = GetHighestCard(this);
+            int ourrank = GetHighestCard();
             int index = 0;
             int ahead = 0;
             int behind = 1;
@@ -131,7 +131,7 @@ namespace BaseGame
             // Hand potential array, each index represents ahead, tied, and behind
             int[,] HP = new int[3, 3]; 
             int[] HPTotal = new int[3];
-            int ourrank = GetHighestCard(this);
+            int ourrank = GetHighestCard();
             int index = 0;
             int ahead = 0;
             int behind = 1;
@@ -191,7 +191,7 @@ namespace BaseGame
             int ahead = 0;
             int behind = 0;
             int tied = 0;
-            int ourrank = GetHighestCard(this);
+            int ourrank = GetHighestCard();
 
             for (int i = 0; i < deck.Length; i++)
             {
