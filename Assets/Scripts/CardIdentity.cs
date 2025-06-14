@@ -17,53 +17,54 @@ public class CardIdentity : MonoBehaviour
 		Sprite diamonds2 = deckOfCards[13], diamonds3 = deckOfCards[14], diamonds4 = deckOfCards[15], diamonds5 = deckOfCards[16], diamonds6 = deckOfCards[17], diamonds7 = deckOfCards[18], diamonds8 = deckOfCards[19], diamonds9 = deckOfCards[20], diamonds10 = deckOfCards[21], diamondsJack = deckOfCards[22], diamondsQueen = deckOfCards[23], diamondsKing = deckOfCards[24], diamondsAce = deckOfCards[25];
 		Sprite hearts2 = deckOfCards[26], hearts3 = deckOfCards[27], hearts4 = deckOfCards[28], hearts5 = deckOfCards[29], hearts6 = deckOfCards[30], hearts7 = deckOfCards[31], hearts8 = deckOfCards[32], hearts9 = deckOfCards[33], hearts10 = deckOfCards[34], heartsJack = deckOfCards[35], heartsQueen = deckOfCards[36], heartsKing = deckOfCards[37], heartsAce = deckOfCards[38];
 		Sprite spades2 = deckOfCards[39], spades3 = deckOfCards[40], spades4 = deckOfCards[41], spades5 = deckOfCards[42], spades6 = deckOfCards[43], spades7 = deckOfCards[44], spades8 = deckOfCards[45], spades9 = deckOfCards[46], spades10 = deckOfCards[47], spadesJack = deckOfCards[48], spadesQueen = deckOfCards[49], spadesKing = deckOfCards[50], spadesAce = deckOfCards[51];
-		Image childImage = GetComponent<Image>();
+		//Image childImage = GetComponent<Image>();
+		SpriteRenderer sr = GetComponent<SpriteRenderer>();
         number = pokerCardScript.GetCardNumber();
         suit = pokerCardScript.GetSuit();
 
-        if (childImage != null)
+        if (sr != null)
         {
 	        if (suit.Equals("clubs")) {
 		        switch (number)
 		        {
 			        case 1:
-				        childImage.sprite = clubsAce;
+				        sr.sprite = clubsAce;
 				        break;
 			        case 2:
-				        childImage.sprite = clubs2;
+				        sr.sprite = clubs2;
 				        break;
 			        case 3:
-				        childImage.sprite = clubs3;
+				        sr.sprite = clubs3;
 				        break;
 			        case 4:
-				        childImage.sprite = clubs4;
+				        sr.sprite = clubs4;
 				        break;
 			        case 5:
-				        childImage.sprite = clubs5;
+				        sr.sprite = clubs5;
 				        break;
 			        case 6:
-				        childImage.sprite = clubs6;
+				        sr.sprite = clubs6;
 				        break;
 			        case 7:
-				        childImage.sprite = clubs7;
+				        sr.sprite = clubs7;
 				        break;
 			        case 8:
-				        childImage.sprite = clubs8;
+				        sr.sprite = clubs8;
 				        break;
 			        case 9:
-				        childImage.sprite = clubs9;
+				        sr.sprite = clubs9;
 				        break;
 			        case 10:
-				        childImage.sprite = clubs10;
+				        sr.sprite = clubs10;
 				        break;
 			        case 11:
-				        childImage.sprite = clubsJack;
+				        sr.sprite = clubsJack;
 				        break;
 			        case 12:
-				        childImage.sprite = clubsQueen;
+				        sr.sprite = clubsQueen;
 				        break;
 			        case 13:
-				        childImage.sprite = clubsKing;
+				        sr.sprite = clubsKing;
 				        break;
 		        }
 				Debug.Log("clubs");
@@ -72,43 +73,43 @@ public class CardIdentity : MonoBehaviour
 		        switch (number)
 		        {
 			        case 1:
-				        childImage.sprite = diamondsAce;
+				        sr.sprite = diamondsAce;
 				        break;
 			        case 2:
-				        childImage.sprite = diamonds2;
+				        sr.sprite = diamonds2;
 				        break;
 			        case 3:
-				        childImage.sprite = diamonds3;
+				        sr.sprite = diamonds3;
 				        break;
 			        case 4:
-				        childImage.sprite = diamonds4;
+				        sr.sprite = diamonds4;
 				        break;
 			        case 5:
-				        childImage.sprite = diamonds5;
+				        sr.sprite = diamonds5;
 				        break;
 			        case 6:
-				        childImage.sprite = diamonds6;
+				        sr.sprite = diamonds6;
 				        break;
 			        case 7:
-				        childImage.sprite = diamonds7;
+				        sr.sprite = diamonds7;
 				        break;
 			        case 8:
-				        childImage.sprite = diamonds8;
+				        sr.sprite = diamonds8;
 				        break;
 			        case 9:
-				        childImage.sprite = diamonds9;
+				        sr.sprite = diamonds9;
 				        break;
 			        case 10:
-				        childImage.sprite = diamonds10;
+				        sr.sprite = diamonds10;
 				        break;
 			        case 11:
-				        childImage.sprite = diamondsJack;
+				        sr.sprite = diamondsJack;
 				        break;
 			        case 12:
-				        childImage.sprite = diamondsQueen;
+				        sr.sprite = diamondsQueen;
 				        break;
 			        case 13:
-				        childImage.sprite = diamondsKing;
+				        sr.sprite = diamondsKing;
 				        break;
 		        }
 		        Debug.Log("diamonds");
@@ -117,43 +118,43 @@ public class CardIdentity : MonoBehaviour
 		        switch (number)
 		        {
 			        case 1:
-				        childImage.sprite = heartsAce;
+				        sr.sprite = heartsAce;
 				        break;
 			        case 2:
-				        childImage.sprite = hearts2;
+				        sr.sprite = hearts2;
 				        break;
 			        case 3:
-				        childImage.sprite = hearts3;
+				        sr.sprite = hearts3;
 				        break;
 			        case 4:
-				        childImage.sprite = hearts4;
+				        sr.sprite = hearts4;
 				        break;
 			        case 5:
-				        childImage.sprite = hearts5;
+				        sr.sprite = hearts5;
 				        break;
 			        case 6:
-				        childImage.sprite = hearts6;
+				        sr.sprite = hearts6;
 				        break;
 			        case 7:	
-				        childImage.sprite = hearts7;
+				        sr.sprite = hearts7;
 				        break;
 			        case 8:
-				        childImage.sprite = hearts8;
+				        sr.sprite = hearts8;
 				        break;
 			        case 9:
-				        childImage.sprite = hearts9;
+				        sr.sprite = hearts9;
 				        break;
 			        case 10:
-				        childImage.sprite = hearts10;
+				        sr.sprite = hearts10;
 				        break;
 			        case 11:
-				        childImage.sprite = heartsJack;
+				        sr.sprite = heartsJack;
 				        break;
 			        case 12:
-				        childImage.sprite = heartsQueen;
+				        sr.sprite = heartsQueen;
 				        break;
 			        case 13:
-				        childImage.sprite = heartsKing;
+				        sr.sprite = heartsKing;
 				        break;
 		        }
 		        Debug.Log("hearts");
@@ -162,50 +163,50 @@ public class CardIdentity : MonoBehaviour
 				switch (number)
 				{
 					case 1:
-						childImage.sprite = spadesAce;
+						sr.sprite = spadesAce;
 						break;
 					case 2:
-						childImage.sprite = spades2;
+						sr.sprite = spades2;
 						break;
 					case 3:
-						childImage.sprite = spades3;
+						sr.sprite = spades3;
 						break;
 					case 4:
-						childImage.sprite = spades4;
+						sr.sprite = spades4;
 						break;
 					case 5:
-						childImage.sprite = spades5;
+						sr.sprite = spades5;
 						break;
 					case 6:
-						childImage.sprite = spades6;
+						sr.sprite = spades6;
 						break;
 					case 7:
-						childImage.sprite = spades7;
+						sr.sprite = spades7;
 						break;
 					case 8:
-						childImage.sprite = spades8;
+						sr.sprite = spades8;
 						break;
 					case 9:
-						childImage.sprite = spades9;
+						sr.sprite = spades9;
 						break;
 					case 10:
-						childImage.sprite = spades10;
+						sr.sprite = spades10;
 						break;
 					case 11:
-						childImage.sprite = spadesJack;
+						sr.sprite = spadesJack;
 						break;
 					case 12:
-						childImage.sprite = spadesQueen;
+						sr.sprite = spadesQueen;
 						break;
 					case 13:
-						childImage.sprite = spadesKing;
+						sr.sprite = spadesKing;
 						break;
 				}
 				Debug.Log("spades");
 			}
 			else
 			{
-				childImage.sprite = clubs2;
+				sr.sprite = clubs2;
 			}
         }
         else
