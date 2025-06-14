@@ -310,6 +310,7 @@ GameObject:
   m_Component:
   - component: {fileID: 334684285}
   - component: {fileID: 334684284}
+  - component: {fileID: 334684286}
   m_Layer: 0
   m_Name: HandManager
   m_TagString: Untagged
@@ -333,6 +334,7 @@ MonoBehaviour:
   cardPrefab: {fileID: 1034793775180516603, guid: 9148c75c2c92145d09aa584231072d02, type: 3}
   splineContainer: {fileID: 123080362}
   spawnPoint: {fileID: 1481980570}
+  humanPlayer: {fileID: 334684286}
 --- !u!4 &334684285
 Transform:
   m_ObjectHideFlags: 0
@@ -348,6 +350,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &334684286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334684283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76fd35b11246c4df49d0959f939765ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foldButton: {fileID: 0}
+  checkButton: {fileID: 0}
+  callButton: {fileID: 0}
+  raiseButton: {fileID: 0}
+  allInButton: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,26 +634,26 @@ MonoBehaviour:
   - m_EditModeType: 1
     m_Knots:
     - Position:
-        x: 0
-        y: 0
+        x: -5
+        y: 0.29
         z: 0
       TangentIn:
         x: -0
         y: -0
-        z: -0.5011161
+        z: -0.498
       TangentOut:
         x: 0
         y: 0
-        z: 0.5011161
+        z: 0.498
       Rotation:
         value:
-          x: -0.5143754
-          y: 0.4851989
-          z: -0.48519832
-          w: 0.5143759
+          x: 0.5
+          y: 0.5
+          z: 0.5
+          w: 0.5
     - Position:
-        x: 5.0026293
-        y: 0.2922969
+        x: -0.02
+        y: 0.29
         z: 0
       TangentIn:
         x: 0
@@ -646,28 +665,28 @@ MonoBehaviour:
         z: 3.88
       Rotation:
         value:
-          x: 0.5000009
-          y: -0.4999991
-          z: 0.5000009
-          w: -0.4999991
+          x: 0.5
+          y: 0.5
+          z: 0.5
+          w: 0.5
     - Position:
-        x: 10
-        y: 0
+        x: 4.25
+        y: 0.3
         z: -0
       TangentIn:
         x: -0
         y: -0
-        z: -0.50059116
+        z: -0.42700118
       TangentOut:
         x: 0
         y: 0
-        z: 0.50059116
+        z: 0.42700118
       Rotation:
         value:
-          x: 0.4851829
-          y: -0.5143904
-          z: 0.5143905
-          w: -0.4851828
+          x: 0.49941427
+          y: 0.50058514
+          z: 0.5005852
+          w: 0.49941415
     m_MetaData:
     - Mode: 0
       Tension: 0.5
@@ -695,7 +714,7 @@ Transform:
   m_GameObject: {fileID: 674875574}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.992629, y: 0.0077031255, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
