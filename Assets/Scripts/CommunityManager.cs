@@ -4,20 +4,18 @@ using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Splines;
-using BaseGame;
 
-public class HandManager : MonoBehaviour
+public class CommunityManager : MonoBehaviour
 {
     [SerializeField] private int maxHandSize;
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private SplineContainer splineContainer;
     [SerializeField] private Transform spawnPoint;
     private List<GameObject> handCards = new();
-    public HumanPlayer humanPlayer;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.X))
         {
             DrawCard();
         }
@@ -31,7 +29,6 @@ public class HandManager : MonoBehaviour
         }
         GameObject g = Instantiate(cardPrefab, spawnPoint.position, spawnPoint.rotation);
         handCards.Add(g);
-        
         UpdateCardPositions();
     }
     
