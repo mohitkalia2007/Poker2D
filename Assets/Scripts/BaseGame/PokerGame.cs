@@ -55,7 +55,12 @@ public class PokerGame : MonoBehaviour
             players.Add(newAlgorithmPlayer.GetComponent<AlgorithmPlayer>());
             managers.Add(newManager);
         }
-        //foreach (Player player in players) { round.AddPlayer(player); } 
+
+        foreach (Player player in players)
+        {
+            player.Balance = InputFieldHandler.savedInteger;
+            Debug.Log(InputFieldHandler.savedInteger);
+        }
         for (int i = 0; i < deck.GetLength(0); i++)
         {
             for (int j = 0; j < deck.GetLength(1); j++)
