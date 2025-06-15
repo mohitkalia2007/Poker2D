@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3344293686093236656}
   m_Layer: 0
   m_Name: LogicCard
-  m_TagString: Untagged
+  m_TagString: LogicCard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b09bcbe3e54b440baa114dedfb3ec49c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  num: 0
-  suit: 
+  num: 14
+  suit: club

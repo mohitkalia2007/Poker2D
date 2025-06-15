@@ -7,6 +7,7 @@ namespace BaseGame
 {
     public class Round : MonoBehaviour
     {
+        [SerializeField] GameObject communityManager;
         private readonly System.Random random = new System.Random();
         public int minimumBet = 0;
         private string[] suit = { "diamonds", "spades", "hearts", "clubs" };
@@ -16,10 +17,16 @@ namespace BaseGame
         public List<PokerCard> knownCards;
         public PokerCard[] HouseHand { get { return houseHand; } set { houseHand = value; } }
         public void AddPlayer(Player player) { players.Add(player); }
+        void Start()
+        {
+            communityManager = GameObject.FindGameObjectWithTag("Manager");
+        }
         public void NextCard()
         {
             if (knownCardCount < houseHand.Length) knownCards.Add(houseHand[knownCardCount]);
-            knownCards.Last().IsFaceUp = true;
+            knownCards.ElementAt(knownCardCount).IsFaceUp = true;
+            communityManager.GetComponent<CommunityManager>().DrawCard(knownCards.ElementAt(knownCardCount).GetSuit(), knownCards.ElementAt(knownCardCount).GetCardNumber());
+            knownCardCount++;
         }
         public List<Player> DeclareWinner(List<Player> players)
         {

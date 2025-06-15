@@ -14,10 +14,11 @@ namespace BaseGame
 {
     public class AlgorithmPlayer : Player 
     {
-        public PokerGame game;
-        public AlgorithmPlayer(PokerGame round)
+        public AlgorithmManager algorithmManager;
+        PokerGame game;
+        void Start()
         {
-            game = round;
+            game = GameObject.FindGameObjectWithTag("GameController").GetComponent<PokerGame>();
         }
         public override int MakeBet(PokerGame.BettingRound bettingRound, int minimum, List<Pot> pots) // Makes a bet based on effective hand strength, pot size, and amount of time spent 
         {

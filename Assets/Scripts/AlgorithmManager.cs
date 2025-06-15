@@ -6,14 +6,34 @@ using UnityEngine;
 using UnityEngine.Splines;
 using BaseGame;
 
-public class CommunityManager : MonoBehaviour
+public class AlgorithmManager : MonoBehaviour
 {
     [SerializeField] private int maxHandSize;
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private SplineContainer splineContainer;
     [SerializeField] private Transform spawnPoint;
+    [SerializeField] private GameObject algorithmPlayer;
     private List<GameObject> handCards = new();
-    public void DrawCard(string suit, int number)
+    void Start()
+    {
+        spawnPoint = GameObject.Find("CardSpawnPoint").transform;
+        splineContainer = GameObject.Find("AHandSpline").GetComponent<SplineContainer>();
+        algorithmPlayer = transform.parent.gameObject;
+    }
+    private void Update()
+    {
+        AlgorithmPlayer player = algorithmPlayer.GetComponent<AlgorithmPlayer>();
+        for (int i = 0; i < 2; i++)
+        {
+            Debug.Log(player.Hand[i]);
+            if (player.Hand[i] == null) continue;
+            String suit = player.Hand[i].GetSuit();
+            int num = player.Hand[i].GetCardNumber();
+            DrawCard(suit, num);
+        }
+    }
+
+    public void DrawCard(String suit, int number)
     {
         if (handCards.Count >= maxHandSize)
         {

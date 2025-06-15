@@ -27,6 +27,11 @@ public class PokerGame : MonoBehaviour
     string[] suits = { "diamonds", "spades", "hearts", "clubs" };
     private readonly System.Random random = new System.Random();
     public int currentBet = 0;
+    private bool preflopDone = false;
+    private bool flopDone = false;
+    private bool turnDone = false;
+    private bool riverDone = false;
+    private bool showdownDone = false;
     public enum BettingRound
     {
         PreFlop, Flop, Turn, River
@@ -39,15 +44,16 @@ public class PokerGame : MonoBehaviour
 
         for (int i = 0; i < algorithmPlayerCount; i++)
         {
+            GameObject newAlgorithmPlayer = Instantiate(algorithmPlayer);
             players.Add(algorithmPlayer.GetComponent<AlgorithmPlayer>());
         }
         try { foreach (Player player in players) { round.AddPlayer(player); } }
-        catch {}
+        catch { }
         for (int i = 0; i < deck.GetLength(0); i++)
         {
             for (int j = 0; j < deck.GetLength(1); j++)
             {
-                GameObject newCard = Instantiate(pokerCard); 
+                GameObject newCard = Instantiate(pokerCard);
                 PokerCard cardComponent = newCard.GetComponent<PokerCard>();
                 cardComponent.Init(j + 2, suits[i]);
                 deck[i, j] = cardComponent;
@@ -96,6 +102,43 @@ public class PokerGame : MonoBehaviour
                     break;
                 }
             } while (true);
+        }
+        round.HouseHand = houseHand;
+        foreach (Player player in players)
+        {
+            if (player is AlgorithmPlayer algorithmPlayer)
+            {
+                foreach (PokerCard c in player.Hand) algorithmPlayer.algorithmManager.DrawCard(c.GetSuit(), c.GetCardNumber());
+            }
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1) && !preflopDone)
+        {
+            PreFlop();
+            preflopDone = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2) && preflopDone && !flopDone)
+        {
+            Flop();
+            flopDone = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3) && flopDone && !turnDone)
+        {
+            Turn();
+            turnDone = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4) && turnDone && !riverDone)
+        {
+            River();
+            riverDone = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5) && riverDone && !showdownDone)
+        {
+            ShowDown();
+            showdownDone = true;
         }
     }
     private void ProcessBettingRound(BettingRound bettingRound)
