@@ -2018,7 +2018,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 924352311}
   m_Direction: 0
   m_MinValue: 1
-  m_MaxValue: 7
+  m_MaxValue: 5
   m_WholeNumbers: 1
   m_Value: 1
   m_OnValueChanged:
@@ -2879,7 +2879,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4df4b1c7040cf430aa0dd1445d945801, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  savedInteger: 0
 --- !u!1 &1205099962
 GameObject:
   m_ObjectHideFlags: 0
