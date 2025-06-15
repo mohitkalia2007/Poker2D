@@ -48,7 +48,8 @@ MonoBehaviour:
   bigBlind: 10
   humanPlayerCount: 1
   algorithmPlayerCount: 5
-  algorithmPlayer: {fileID: 8729531916149518962, guid: 1d6bed4ad1a9de646a655339b1bbf496, type: 3}
+  algorithmPlayer: {fileID: 8668019639701492297, guid: 7962f4743d3e0824f85a43fe918756c5, type: 3}
+  algorithmPlayerManager: {fileID: 1713172797664875168, guid: 325acf9f32902744d99317642a8aa793, type: 3}
   humanPlayer: {fileID: 0}
   pokerCard: {fileID: 3944393318081206655, guid: c16660f149f92804dab3c01b95a1f3d1, type: 3}
   round: {fileID: 8584000857437027351}
