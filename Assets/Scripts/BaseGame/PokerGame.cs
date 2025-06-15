@@ -59,7 +59,8 @@ public class PokerGame : MonoBehaviour
         foreach (Player player in players)
         {
             player.Balance = InputFieldHandler.savedInteger;
-            Debug.Log(InputFieldHandler.savedInteger);
+            Debug.Log("yeah");
+            Debug.Log(player.Balance);
         }
         for (int i = 0; i < deck.GetLength(0); i++)
         {

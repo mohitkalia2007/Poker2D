@@ -11,5 +11,6 @@ public class InputFieldHandler : MonoBehaviour
     public void GrabFromInputField(string input)
     {
         savedInteger = int.Parse(input);
+        Debug.Log(savedInteger);
     }
 }
