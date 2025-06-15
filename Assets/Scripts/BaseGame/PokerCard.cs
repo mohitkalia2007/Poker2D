@@ -11,7 +11,7 @@ namespace BaseGame
         [SerializeField] int num;
         [SerializeField] string suit;
         List<string> suits = new List<string>{ "diamonds", "spades", "hearts", "clubs" };
-        public bool IsFaceUp { get; set; }
+        public bool IsFaceUp = false;
         public void Init(int number, string suit)
         { 
             num = number;
