@@ -14,11 +14,12 @@ using UnityEngine.XR;
 public class PokerGame : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public int bigBlind;
     public int humanPlayerCount;
     public int algorithmPlayerCount;
     public Round round = new Round();
-    List<Player> players;
-    List<Pot> pots = new List<Pot>();
+    public List<Player> players;
+    List<Pot> pots = new List<Pot>{new Pot()};
     PokerCard[,] deck = new PokerCard[4, 13];
     string[] suits = { "diamond", "spade", "heart", "club" };
     private readonly System.Random random = new System.Random();
@@ -27,11 +28,11 @@ public class PokerGame : MonoBehaviour
     {
         PreFlop, Flop, Turn, River
     }
-    public BettingRound bettingRound { get; set; }
+    public BettingRound bettingRound { get; private set; }
     void Start()
     {
         for (int i = 0; i < humanPlayerCount; i++) { players.Add(new HumanPlayer()); }
-        for (int i = 0; i < algorithmPlayerCount; i++) { players.Add(new AlgorithmPlayer(round)); }
+        for (int i = 0; i < algorithmPlayerCount; i++) { players.Add(new AlgorithmPlayer(this)); }
         foreach (Player player in players) { round.AddPlayer(player); }
         for (int i = 0; i < deck.GetLength(0); i++)
         {
@@ -83,9 +84,12 @@ public class PokerGame : MonoBehaviour
             } while (true);
         }
     }
-    private void ProcessBettingRound()
+    private void ProcessBettingRound(BettingRound bettingRound)
     {
+        Console.WriteLine($"--- {bettingRound} Betting Round ---");
         currentBet = 0;
+        if (bettingRound == BettingRound.PreFlop) currentBet = bigBlind;
+
         bool bettingComplete = false;
 
         while (!bettingComplete)
@@ -94,18 +98,19 @@ public class PokerGame : MonoBehaviour
 
             foreach (Player player in players)
             {
-                if (!player.IsTurn) continue;  // Skip players who have folded or are all-in
+                if (!player.IsTurn || player.LastAction == Player.PlayerAction.AllIn) continue;  // Skip players who have folded or are all-in
 
-                // Get player's betting decision
-                int minimumBet = currentBet - player.CurrentBet;  // How much more they need to call
-                player.MakeBet(bettingRound);  // This will trigger the player's UI or AI decision
-
+                player.MakeBet(bettingRound, currentBet, pots);  // This will trigger the player's UI or AI decision 
 
                 // Handle the player's decision (this will be received through events/callbacks)
-                if (player.LastAction == Player.PlayerAction.Raise)
+                if (player.CurrentBet > currentBet)
                 {
                     currentBet = player.CurrentBet;
                     bettingComplete = false;  // Need another round if someone raises
+                }
+                if (player.LastAction == Player.PlayerAction.AllIn)
+                {
+                    player.IsTurn = false;
                 }
             }
         }
@@ -154,7 +159,7 @@ public class PokerGame : MonoBehaviour
     void PreFlop() //betting round before any cards are revealed
     {
         bettingRound = BettingRound.PreFlop;
-        ProcessBettingRound();
+        ProcessBettingRound(BettingRound.PreFlop);
         round.NextCard();
         round.NextCard();
         round.NextCard();
@@ -162,20 +167,20 @@ public class PokerGame : MonoBehaviour
     void Flop() //betting round after first three cards are revealed
     {
         bettingRound = BettingRound.Flop;
-        ProcessBettingRound();
+        ProcessBettingRound(BettingRound.Flop);
         round.NextCard();
     }
     void Turn() //betting round before final card reveal
     {
         bettingRound = BettingRound.Turn;
-        ProcessBettingRound();
+        ProcessBettingRound(BettingRound.Turn);
         round.NextCard();
     }
     void River() //final betting round
     {
         bettingRound = BettingRound.River;
-        ProcessBettingRound();
-        if (AnyoneIsAllIn()) CreatePots(players, pots);
+        ProcessBettingRound(BettingRound.River);
+        if (AnyoneIsAllIn()) CreatePots(players, pots);  
     }
     void ShowDown() // reveal all cards and declare winner and split pot
     {

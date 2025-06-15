@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BaseGame;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 namespace BaseGame
 {
@@ -10,7 +11,6 @@ namespace BaseGame
     {
         int balance;
         protected bool areCardsShowing = false;
-        //CardsManager cardsManager = new CardsManager();
         protected bool inGame = true;
         protected PokerCard[] cards = new PokerCard[2];
         private bool isTurn;
@@ -24,10 +24,7 @@ namespace BaseGame
         {
             get { return cards; }
             set
-            {
-                if (value.Length == 2) cards = value;
-                ///foreach (PokerCard card in cards) cardsManager.AddCard(card);
-            }
+            { if (value.Length == 2) cards = value; }
         }
         public int Balance { get { return balance; } set { balance = value; } }
         public PlayerAction LastAction { get; set; }
@@ -73,7 +70,7 @@ namespace BaseGame
         }
         
         public void Check() { LastAction = PlayerAction.Check; CurrentBet = 0; }
-        public abstract int MakeBet(PokerGame.BettingRound bettingRound);
+        public abstract int MakeBet(PokerGame.BettingRound bettingRound, int minimum, List<Pot> pots);
         protected abstract int GetHighestCard();
     }
 }

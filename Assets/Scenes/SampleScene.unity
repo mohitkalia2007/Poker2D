@@ -330,7 +330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5e6d2aed04314b2f9498c5d5740c9fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHandSize: 5
+  maxHandSize: 2
   cardPrefab: {fileID: 1034793775180516603, guid: 9148c75c2c92145d09aa584231072d02, type: 3}
   splineContainer: {fileID: 123080362}
   spawnPoint: {fileID: 1481980570}
