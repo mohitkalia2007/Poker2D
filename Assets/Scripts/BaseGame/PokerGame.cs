@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using UnityEngine.XR;
+using UnityEngine.Splines;
 
 public class PokerGame : MonoBehaviour
 {
@@ -34,6 +35,7 @@ public class PokerGame : MonoBehaviour
     private bool turnDone = false;
     private bool riverDone = false;
     private bool showdownDone = false;
+    [SerializeField] private SplineContainer[] availableSplines; // Drag your splines here
     public enum BettingRound
     {
         PreFlop, Flop, Turn, River
@@ -48,6 +50,8 @@ public class PokerGame : MonoBehaviour
         {
             GameObject newAlgorithmPlayer = Instantiate(algorithmPlayer);
             GameObject newManager = Instantiate(algorithmPlayerManager);  // Create new variable for instance
+            AlgorithmManager newAlgorithmManager = newAlgorithmPlayer.GetComponent<AlgorithmManager>();
+            newAlgorithmManager.splineContainer = availableSplines[i];
             if (newManager != null && newManager.GetComponent<AlgorithmManager>() != null)
             {
                 newManager.GetComponent<AlgorithmManager>().aiPlayerObject = newAlgorithmPlayer;

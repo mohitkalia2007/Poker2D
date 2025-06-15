@@ -56,6 +56,9 @@ MonoBehaviour:
   players: []
   managers: []
   currentBet: 0
+  availableSplines:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &8584000857437027351
 MonoBehaviour:
   m_ObjectHideFlags: 0

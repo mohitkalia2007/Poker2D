@@ -1669,7 +1669,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 968482485092464171, guid: 60665ed2ed3eb4243bf4c6e7600794ff, type: 3}
       propertyPath: m_Name
-      value: Algorithm 1
+      value: AlgorithmSpline 1
       objectReference: {fileID: 0}
     - target: {fileID: 5072771805390868338, guid: 60665ed2ed3eb4243bf4c6e7600794ff, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1858,7 +1858,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 968482485092464171, guid: 60665ed2ed3eb4243bf4c6e7600794ff, type: 3}
       propertyPath: m_Name
-      value: Algorithm 4
+      value: AlgorithmSplne 4
       objectReference: {fileID: 0}
     - target: {fileID: 5072771805390868338, guid: 60665ed2ed3eb4243bf4c6e7600794ff, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2172,7 +2172,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 968482485092464171, guid: 60665ed2ed3eb4243bf4c6e7600794ff, type: 3}
       propertyPath: m_Name
-      value: Algorithm 3
+      value: AlgorithmSpline 3
       objectReference: {fileID: 0}
     - target: {fileID: 5072771805390868338, guid: 60665ed2ed3eb4243bf4c6e7600794ff, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2531,7 +2531,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 968482485092464171, guid: 60665ed2ed3eb4243bf4c6e7600794ff, type: 3}
       propertyPath: m_Name
-      value: Algorithm 2
+      value: AlgorithmSpline 2
       objectReference: {fileID: 0}
     - target: {fileID: 5072771805390868338, guid: 60665ed2ed3eb4243bf4c6e7600794ff, type: 3}
       propertyPath: m_LocalPosition.x

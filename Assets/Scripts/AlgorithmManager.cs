@@ -10,7 +10,7 @@ public class AlgorithmManager : MonoBehaviour
 {
     [SerializeField] private int maxHandSize;
     [SerializeField] private GameObject cardPrefab;
-    [SerializeField] private SplineContainer splineContainer;
+    public SplineContainer splineContainer;
     [SerializeField] private Transform spawnPoint;
     public GameObject aiPlayerObject; // Reference to your AI player GameObject
 
