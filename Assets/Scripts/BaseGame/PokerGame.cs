@@ -106,11 +106,18 @@ public class PokerGame : MonoBehaviour
         round.HouseHand = houseHand;
         foreach (Player player in players)
         {
-            if (player is AlgorithmPlayer algorithmPlayer)
+            if (player is AlgorithmPlayer a)
             {
-                foreach (PokerCard c in player.Hand) algorithmPlayer.algorithmManager.DrawCard(c.GetSuit(), c.GetCardNumber());
+                foreach (PokerCard c in a.Hand) { Debug.Log(c.ToString()); }
             }
         }
+        // foreach (Player player in players)
+        // {
+        //     if (player is AlgorithmPlayer algorithmPlayer)
+        //     {
+        //         foreach (PokerCard c in player.Hand) algorithmPlayer.algorithmManager.DrawCard(c.GetSuit(), c.GetCardNumber());
+        //     }
+        // }
     }
 
     void Update()

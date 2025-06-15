@@ -19,9 +19,6 @@ public class AlgorithmManager : MonoBehaviour
         spawnPoint = GameObject.Find("CardSpawnPoint").transform;
         splineContainer = GameObject.Find("AHandSpline").GetComponent<SplineContainer>();
         algorithmPlayer = transform.parent.gameObject;
-    }
-    private void Update()
-    {
         AlgorithmPlayer player = algorithmPlayer.GetComponent<AlgorithmPlayer>();
         for (int i = 0; i < 2; i++)
         {
@@ -31,6 +28,10 @@ public class AlgorithmManager : MonoBehaviour
             int num = player.Hand[i].GetCardNumber();
             DrawCard(suit, num);
         }
+    }
+    private void Update()
+    {
+        
     }
 
     public void DrawCard(String suit, int number)
