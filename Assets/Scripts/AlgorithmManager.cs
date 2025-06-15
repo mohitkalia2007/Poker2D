@@ -20,7 +20,6 @@ public class AlgorithmManager : MonoBehaviour
     public void DisplayAIHand()
     {
         spawnPoint = GameObject.Find("CardSpawnPoint").transform;
-        splineContainer = GameObject.Find("Spline").GetComponent<SplineContainer>();
         AlgorithmPlayer aiPlayer = aiPlayerObject.GetComponent<AlgorithmPlayer>();
 
         for (int i = 0; i < aiPlayer.Hand.Length; i++)

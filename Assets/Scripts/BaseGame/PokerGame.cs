@@ -35,7 +35,7 @@ public class PokerGame : MonoBehaviour
     private bool turnDone = false;
     private bool riverDone = false;
     private bool showdownDone = false;
-    [SerializeField] private SplineContainer[] availableSplines; // Drag your splines here
+    [SerializeField] private List<SplineContainer> availableSplines = new List<SplineContainer>(); // Drag your splines here
     public enum BettingRound
     {
         PreFlop, Flop, Turn, River
@@ -43,23 +43,91 @@ public class PokerGame : MonoBehaviour
     public BettingRound bettingRound { get; private set; }
     void Start()
     {
+        availableSplines.Clear();
         humanPlayer = GameObject.FindWithTag("Player");
         players.Add(humanPlayer.GetComponent<HumanPlayer>());
 
+        for (int i = 1; i <= 5; i++)
+        {
+            string splineName = $"AlgorithmSpline {i}";
+            GameObject splineObj = GameObject.Find(splineName);
+            
+            if (splineObj != null)
+            {
+                SplineContainer spline = splineObj.GetComponent<SplineContainer>();
+                if (spline != null)
+                {
+                    availableSplines.Add(spline);
+                    Debug.Log($"Successfully found and added {splineName}");
+                }
+                else
+                {
+                    Debug.LogError($"SplineContainer component missing on {splineName}");
+                }
+            }
+            else
+            {
+                Debug.LogError($"Could not find GameObject named {splineName}");
+            }
+        }
+        // Verify we have enough splines before creating AI players
+        if (availableSplines.Count < algorithmPlayerCount)
+        {
+            Debug.LogError($"Not enough splines found! Need {algorithmPlayerCount} but only found {availableSplines.Count}");
+            return;
+        }
+         // Create AI players
         for (int i = 0; i < algorithmPlayerCount; i++)
         {
             GameObject newAlgorithmPlayer = Instantiate(algorithmPlayer);
-            GameObject newManager = Instantiate(algorithmPlayerManager);  // Create new variable for instance
-            AlgorithmManager newAlgorithmManager = newManager.GetComponent<AlgorithmManager>();
-            newAlgorithmManager.splineContainer = availableSplines[i];
-            Debug.Log("changed the splines");
-            if (newManager != null && newManager.GetComponent<AlgorithmManager>() != null)
+            GameObject newManager = Instantiate(algorithmPlayerManager);
+            AlgorithmManager manager = newManager.GetComponent<AlgorithmManager>();
+
+            if (manager != null)
             {
-                newManager.GetComponent<AlgorithmManager>().aiPlayerObject = newAlgorithmPlayer;
+                Debug.Log($"Setting up manager {i} with spline {i}");
+                manager.splineContainer = availableSplines[i];
+                manager.aiPlayerObject = newAlgorithmPlayer;
+                
+                if (manager.splineContainer == null)
+                {
+                    Debug.LogError($"Failed to assign spline {i} to manager");
+                }
             }
+            
             players.Add(newAlgorithmPlayer.GetComponent<AlgorithmPlayer>());
             managers.Add(newManager);
         }
+        // for (int i = 0; i < algorithmPlayerCount; i++)
+        // {
+        //     GameObject newAlgorithmPlayer = Instantiate(algorithmPlayer);
+        //     GameObject newManager = Instantiate(algorithmPlayerManager);  // Create new variable for instance
+
+        //     AlgorithmManager manager = newManager.GetComponent<AlgorithmManager>();
+
+        //     if (manager != null && manager.GetComponent<AlgorithmManager>() != null && i < availableSplines.Count)
+        //     {
+        //         Debug.Log($"Assigning spline {i} to manager");
+        //         manager.splineContainer = availableSplines[i];
+        //         manager.aiPlayerObject = newAlgorithmPlayer;
+        //         newManager.GetComponent<AlgorithmManager>().aiPlayerObject = newAlgorithmPlayer;
+        //         // Verify assignment
+        //         if (manager.splineContainer != null)
+        //         {
+        //             Debug.Log($"Successfully assigned spline to manager {i}");
+        //         }
+        //         else
+        //         {
+        //             Debug.LogError($"Failed to assign spline to manager {i}");
+        //         }
+        //     }
+        //     else
+        //     {
+        //         Debug.LogError($"Either manager component not found or no spline available at index {i}");
+        //     }
+        //     players.Add(newAlgorithmPlayer.GetComponent<AlgorithmPlayer>());
+        //     managers.Add(newManager);
+        // }
 
         foreach (Player player in players)
         {
@@ -127,6 +195,7 @@ public class PokerGame : MonoBehaviour
         {
             m.GetComponent<AlgorithmManager>().DisplayAIHand();
         }
+        
     }
 
     void Update()
