@@ -38,12 +38,20 @@ namespace BaseGame
         }
         public void Fold()
         {
+            if (!isTurn)
+            {
+                return;
+            }
             LastAction = PlayerAction.Fold;
             CurrentBet = 0;
             isTurn = false;
         }
         public void Call(int amount)
         {
+            if (!isTurn)
+            {
+                return;
+            }
             balance -= amount;
             LastAction = PlayerAction.Call;
             CurrentBet = amount;
@@ -51,6 +59,10 @@ namespace BaseGame
         }
         public void Raise(int value)
         {
+            if (!isTurn)
+            {
+                return;
+            }
             if (value < balance)
             {
                 balance -= value;
@@ -62,14 +74,25 @@ namespace BaseGame
         }
         public void AllIn()
         {
+            if (!isTurn)
+            {
+                return;
+            }
             CurrentBet = balance;
             Stack += balance;
             balance = 0;
             LastAction = PlayerAction.AllIn;
             isTurn = false;
         }
-        
-        public void Check() { LastAction = PlayerAction.Check; CurrentBet = 0; }
+
+        public void Check()
+        {
+            if (!isTurn)
+            {
+                return;
+            }
+            LastAction = PlayerAction.Check; CurrentBet = 0;
+        }
         public abstract int MakeBet(PokerGame.BettingRound bettingRound, int minimum, Pot pots);
         protected abstract int GetHighestCard();
     }
