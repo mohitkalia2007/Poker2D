@@ -14,22 +14,24 @@ namespace BaseGame
 {
     public class AlgorithmPlayer : Player 
     {
-        public Round round;
-        public AlgorithmPlayer(Round round)
+        public PokerGame game;
+        public AlgorithmPlayer(PokerGame round)
         {
-            this.round = round;
+            game = round;
         }
-        public override int MakeBet(PokerGame.BettingRound bettingRound) // Makes a bet based on effective hand strength, pot size, and amount of time spent 
+        public override int MakeBet(PokerGame.BettingRound bettingRound, int minimum, List<Pot> pots) // Makes a bet based on effective hand strength, pot size, and amount of time spent 
         {
         // Calculate effective hand strength based on current cards
         double ehs = EffectiveHS(bettingRound);
 
         // Get pot size and number of active players
         int potSize = 10; //TotalPot();
-        int activePlayers = 5; //bettingRound.Players.Count(p => p.IsActive);
+        
+        GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag("Player");
+        int activePlayers = taggedObjects.Length;
 
         // Get minimum bet required to call
-        int minBet = 0; //bettingRound.GetMinBet();
+        int minBet = game.currentBet;
         
         // Conservative baseline strategy based on EHS, pot odds and number of players
         if (ehs > 0.8) // Very strong hand
@@ -83,7 +85,7 @@ namespace BaseGame
                     if (i == j || deck[i] == null || deck[j] == null) continue; // if the cards do not exist or are the same card just skip this case
 
                     List<PokerCard> oppcards = new List<PokerCard> { deck[i], deck[j] };
-                    int opprank = Math.Max(GetHighestCard(round.knownCards), GetHighestCard(oppcards)); // get the highest rank between the oppenent's hand and the board
+                    int opprank = Math.Max(GetHighestCard(game.round.knownCards), GetHighestCard(oppcards)); // get the highest rank between the oppenent's hand and the board
 
                     // add one tally to the index of HPTotal at the index of which that hand is
                     if (ourrank > opprank) index = ahead;
@@ -101,7 +103,7 @@ namespace BaseGame
                             // make a possible 5-card board:
                             PokerCard[] board = new PokerCard[5];
                             int ind = 0;
-                            foreach (PokerCard c in round.knownCards) board[ind++] = c;
+                            foreach (PokerCard c in game.round.knownCards) board[ind++] = c;
                             board[3] = deck[a];
                             board[4] = deck[b];
 
@@ -146,7 +148,7 @@ namespace BaseGame
                     if (i == j || deck[i] == null || deck[j] == null) continue; // if the cards do not exist or are the same card just skip this case
 
                     List<PokerCard> oppcards = new List<PokerCard> { deck[i], deck[j] };
-                    int opprank = Math.Max(GetHighestCard(round.knownCards), GetHighestCard(oppcards)); // get the highest rank between the oppenent's hand and the board
+                    int opprank = Math.Max(GetHighestCard(game.round.knownCards), GetHighestCard(oppcards)); // get the highest rank between the oppenent's hand and the board
 
                     // add one tally to the index of HPTotal at the index of which that hand is
                     if (ourrank > opprank) index = ahead;
@@ -162,7 +164,7 @@ namespace BaseGame
                         // make a possible 5-card board:
                         PokerCard[] board = new PokerCard[5];
                         int ind = 0;
-                        foreach (PokerCard c in round.knownCards) board[ind++] = c;
+                        foreach (PokerCard c in game.round.knownCards) board[ind++] = c;
                         board[4] = deck[a];
 
                         // get the best rank between our cards and the board cards and also the opponent cards and our cards
@@ -200,7 +202,7 @@ namespace BaseGame
                     if (i == j || deck[i] == null || deck[j] == null) continue;
                     List<PokerCard> oppcards = new List<PokerCard> { deck[i], deck[j] };
 
-                    int opprank = Math.Max(GetHighestCard(round.knownCards), GetHighestCard(oppcards));
+                    int opprank = Math.Max(GetHighestCard(game.round.knownCards), GetHighestCard(oppcards));
                     if (ourrank > opprank) ahead++;
                     else if (ourrank == opprank) tied++;
                     else behind++;
@@ -228,7 +230,7 @@ namespace BaseGame
                 for (int j = 0; j < 13; j++)
                 {
                     if (deck[i * j] == cards[0] || deck[i * j] == cards[1]) deck[i * j] = null;
-                    foreach (PokerCard c in round.knownCards)
+                    foreach (PokerCard c in game.round.knownCards)
                         if (deck[i * j] == c) deck[i * j] = null;
                 }
             }
@@ -240,6 +242,6 @@ namespace BaseGame
             foreach (Pot pot in pots) if (pot.EligiblePlayers.Contains(this)) totalPotSize += pot.Amount;
             return totalPotSize;
         }
-        protected override int GetHighestCard() { return round.GetHighestCard(this); }
+        protected override int GetHighestCard() { return game.round.GetHighestCard(this); }
     }
 }

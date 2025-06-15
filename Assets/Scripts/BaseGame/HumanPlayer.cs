@@ -31,7 +31,7 @@ namespace BaseGame
 
         }
 
-        public override int MakeBet(PokerGame.BettingRound bettingRound)
+        public override int MakeBet(PokerGame.BettingRound bettingRound, int minimum, List<Pot> pots)
         {
             throw new NotImplementedException();
         }
