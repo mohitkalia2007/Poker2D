@@ -38,22 +38,27 @@ public class PokerGame : MonoBehaviour
         {
             players.Add(algorithmPlayer.GetComponent<AlgorithmPlayer>());
         }
-        foreach (Player player in players) { round.AddPlayer(player); }
+        try { foreach (Player player in players) { round.AddPlayer(player); } }
+        catch {}
         for (int i = 0; i < deck.GetLength(0); i++)
         {
-            for (int j = 0; j < deck.GetLength(1); i++)
+            for (int j = 0; j < deck.GetLength(1); j++)
             {
-                deck[i, j] = pokerCard.GetComponent<PokerCard>();
-                pokerCard.GetComponent<PokerCard>().Init(j + 2, suits[i]);
+                GameObject newCard = Instantiate(pokerCard); 
+                PokerCard cardComponent = newCard.GetComponent<PokerCard>();
+                cardComponent.Init(j + 2, suits[i]);
+                deck[i, j] = cardComponent;
             }
         }
         foreach (Player player in players)
         {
+            int randomSuit;
+            int randomRank;
             PokerCard[] hand = new PokerCard[2];
             do
             {
-                int randomSuit = random.Next(0, 4);
-                int randomRank = random.Next(0, 13);
+                randomSuit = random.Next(0, 4);
+                randomRank = random.Next(0, 13);
                 if (deck[randomSuit, randomRank] != null)
                 {
                     hand[0] = deck[randomSuit, randomRank];
@@ -63,8 +68,8 @@ public class PokerGame : MonoBehaviour
             } while (true);
             do
             {
-                int randomSuit = random.Next(0, 4);
-                int randomRank = random.Next(0, 13);
+                randomSuit = random.Next(0, 4);
+                randomRank = random.Next(0, 13);
                 if (deck[randomSuit, randomRank] != null)
                 {
                     hand[1] = deck[randomSuit, randomRank];
