@@ -12,52 +12,48 @@ public class AlgorithmManager : MonoBehaviour
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private SplineContainer splineContainer;
     [SerializeField] private Transform spawnPoint;
-    [SerializeField] private GameObject algorithmPlayer;
+    public GameObject aiPlayerObject; // Reference to your AI player GameObject
+
     private List<GameObject> handCards = new();
-    void Start()
+
+    // Call this from your game logic
+    public void DisplayAIHand()
     {
         spawnPoint = GameObject.Find("CardSpawnPoint").transform;
-        splineContainer = GameObject.Find("AHandSpline").GetComponent<SplineContainer>();
-        algorithmPlayer = transform.parent.gameObject;
-        AlgorithmPlayer player = algorithmPlayer.GetComponent<AlgorithmPlayer>();
-        for (int i = 0; i < 2; i++)
+        AlgorithmPlayer aiPlayer = aiPlayerObject.GetComponent<AlgorithmPlayer>();
+
+        for (int i = 0; i < aiPlayer.Hand.Length; i++)
         {
-            Debug.Log(player.Hand[i]);
-            if (player.Hand[i] == null) continue;
-            String suit = player.Hand[i].GetSuit();
-            int num = player.Hand[i].GetCardNumber();
-            DrawCard(suit, num);
+            if (aiPlayer.Hand[i] == null) continue;
+            string suit = aiPlayer.Hand[i].GetSuit();
+            int number = aiPlayer.Hand[i].GetCardNumber();
+            DrawCard(suit, number);
         }
     }
-    private void Update()
-    {
-        
-    }
 
-    public void DrawCard(String suit, int number)
+    private void DrawCard(string suit, int number)
     {
         if (handCards.Count >= maxHandSize)
         {
             return;
         }
+
         GameObject g = Instantiate(cardPrefab, spawnPoint.position, spawnPoint.rotation);
         PokerCard pokerCardScript = g.GetComponent<PokerCard>();
         pokerCardScript.SetSuit(suit);
-        Debug.Log(pokerCardScript.GetSuit());
         pokerCardScript.SetCardNumber(number);
-        Debug.Log(pokerCardScript.GetCardNumber());
+
         handCards.Add(g);
         UpdateCardPositions();
     }
-    
+
     private void UpdateCardPositions()
     {
-        if (handCards.Count == 0)
-        {
-            return;
-        }
-        float cardSpacing = 1f/maxHandSize;
+        if (handCards.Count == 0) return;
+
+        float cardSpacing = 1f / maxHandSize;
         float firstCardPosition = 0.5f - (handCards.Count - 1) * cardSpacing / 2;
+
         Spline spline = splineContainer.Spline;
         for (int i = 0; i < handCards.Count; i++)
         {
@@ -66,6 +62,7 @@ public class AlgorithmManager : MonoBehaviour
             Vector3 forward = spline.EvaluateTangent(p);
             Vector3 up = spline.EvaluateUpVector(p);
             Quaternion rotation = Quaternion.LookRotation(up, Vector3.Cross(up, forward).normalized);
+
             handCards[i].transform.DOMove(splinePosition, 0.25f);
             handCards[i].transform.DOLocalRotateQuaternion(rotation, 0.25f);
         }

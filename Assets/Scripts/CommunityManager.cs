@@ -22,9 +22,7 @@ public class CommunityManager : MonoBehaviour
         GameObject g = Instantiate(cardPrefab, spawnPoint.position, spawnPoint.rotation);
         PokerCard pokerCardScript = g.GetComponent<PokerCard>();
         pokerCardScript.SetSuit(suit);
-        Debug.Log(pokerCardScript.GetSuit());
         pokerCardScript.SetCardNumber(number);
-        Debug.Log(pokerCardScript.GetCardNumber());
         handCards.Add(g);
         UpdateCardPositions();
     }

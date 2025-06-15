@@ -18,10 +18,12 @@ public class PokerGame : MonoBehaviour
     public int humanPlayerCount;
     public int algorithmPlayerCount;
     public GameObject algorithmPlayer;
+    [SerializeField] GameObject algorithmPlayerManager;
     public GameObject humanPlayer;
     public GameObject pokerCard;
     public Round round;
-    public List<Player> players;
+    public List<Player> players = new List<Player>();
+    public List<GameObject> managers = new List<GameObject>();
     List<Pot> pots = new List<Pot>{new Pot()};
     PokerCard[,] deck = new PokerCard[4, 13];
     string[] suits = { "diamonds", "spades", "hearts", "clubs" };
@@ -45,10 +47,15 @@ public class PokerGame : MonoBehaviour
         for (int i = 0; i < algorithmPlayerCount; i++)
         {
             GameObject newAlgorithmPlayer = Instantiate(algorithmPlayer);
-            players.Add(algorithmPlayer.GetComponent<AlgorithmPlayer>());
+            GameObject newManager = Instantiate(algorithmPlayerManager);  // Create new variable for instance
+            if (newManager != null && newManager.GetComponent<AlgorithmManager>() != null)
+            {
+                newManager.GetComponent<AlgorithmManager>().aiPlayerObject = newAlgorithmPlayer;
+            }
+            players.Add(newAlgorithmPlayer.GetComponent<AlgorithmPlayer>());
+            managers.Add(newManager);
         }
-        try { foreach (Player player in players) { round.AddPlayer(player); } }
-        catch { }
+        //foreach (Player player in players) { round.AddPlayer(player); } 
         for (int i = 0; i < deck.GetLength(0); i++)
         {
             for (int j = 0; j < deck.GetLength(1); j++)
@@ -104,20 +111,11 @@ public class PokerGame : MonoBehaviour
             } while (true);
         }
         round.HouseHand = houseHand;
-        foreach (Player player in players)
+        Debug.Log(players.Count());
+        foreach (GameObject m in managers)
         {
-            if (player is AlgorithmPlayer a)
-            {
-                foreach (PokerCard c in a.Hand) { Debug.Log(c.ToString()); }
-            }
+            m.GetComponent<AlgorithmManager>().DisplayAIHand();
         }
-        // foreach (Player player in players)
-        // {
-        //     if (player is AlgorithmPlayer algorithmPlayer)
-        //     {
-        //         foreach (PokerCard c in player.Hand) algorithmPlayer.algorithmManager.DrawCard(c.GetSuit(), c.GetCardNumber());
-        //     }
-        // }
     }
 
     void Update()
