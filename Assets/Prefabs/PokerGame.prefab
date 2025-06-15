@@ -49,11 +49,12 @@ MonoBehaviour:
   humanPlayerCount: 1
   algorithmPlayerCount: 5
   algorithmPlayer: {fileID: 8668019639701492297, guid: 7962f4743d3e0824f85a43fe918756c5, type: 3}
-  algorithmPlayerManager: {fileID: 1713172797664875168, guid: 325acf9f32902744d99317642a8aa793, type: 3}
+  algorithmPlayerManager: {fileID: 6495361866124617658, guid: 46f60a9af0168a8469d52592fe11f828, type: 3}
   humanPlayer: {fileID: 0}
   pokerCard: {fileID: 3944393318081206655, guid: c16660f149f92804dab3c01b95a1f3d1, type: 3}
   round: {fileID: 8584000857437027351}
   players: []
+  managers: []
   currentBet: 0
 --- !u!114 &8584000857437027351
 MonoBehaviour:

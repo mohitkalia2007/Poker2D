@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1713172797664875168
+--- !u!1 &6495361866124617658
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 577753766902637805}
-  - component: {fileID: 5750642374841143758}
+  - component: {fileID: 4979385411246164478}
+  - component: {fileID: 3927672007017562556}
   m_Layer: 0
   m_Name: AIHandManager
   m_TagString: Untagged
@@ -17,29 +17,29 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &577753766902637805
+--- !u!4 &4979385411246164478
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1713172797664875168}
+  m_GameObject: {fileID: 6495361866124617658}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.50078034, y: 0.5685574, z: 0.0034837723}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8424494243881846483}
+  - {fileID: 3394906329706094575}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5750642374841143758
+--- !u!114 &3927672007017562556
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1713172797664875168}
+  m_GameObject: {fileID: 6495361866124617658}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c6648e6e2df10f4abbebce979ef3735, type: 3}
@@ -47,10 +47,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHandSize: 2
   cardPrefab: {fileID: 1034793775180516603, guid: 9148c75c2c92145d09aa584231072d02, type: 3}
-  splineContainer: {fileID: 7369751568523097877}
+  splineContainer: {fileID: 0}
   spawnPoint: {fileID: 0}
   aiPlayerObject: {fileID: 0}
---- !u!1 &2459181565613005695
+--- !u!1 &7183194049715792284
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58,8 +58,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8424494243881846483}
-  - component: {fileID: 7369751568523097877}
+  - component: {fileID: 3394906329706094575}
+  - component: {fileID: 9101475635788064514}
   m_Layer: 0
   m_Name: AHandSpline
   m_TagString: Untagged
@@ -67,28 +67,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8424494243881846483
+--- !u!4 &3394906329706094575
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2459181565613005695}
+  m_GameObject: {fileID: 7183194049715792284}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7058716, w: 0.70833987}
   m_LocalPosition: {x: -9.9, y: -2.1, z: -0.0034837723}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 577753766902637805}
+  m_Father: {fileID: 4979385411246164478}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 89.8}
---- !u!114 &7369751568523097877
+--- !u!114 &9101475635788064514
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2459181565613005695}
+  m_GameObject: {fileID: 7183194049715792284}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dab5c7d4c32e743048dfca98e2d5914f, type: 3}

@@ -16,6 +16,6 @@ public class UpdateBalScript : MonoBehaviour
             balanceText.text = "Balance: $" + player.Balance.ToString();
         }
         
-        potBalance.text = "Pot Balance: $" + GameObject.Find("PokerGame").GetComponent<PokerGame>().pots.Amount.ToString();
+        //potBalance.text = "Pot Balance: $" + FindFirstObjectByType<PokerGame>().Amount.ToString();
     }
 }

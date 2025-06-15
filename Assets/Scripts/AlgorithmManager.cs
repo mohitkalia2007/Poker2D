@@ -20,6 +20,7 @@ public class AlgorithmManager : MonoBehaviour
     public void DisplayAIHand()
     {
         spawnPoint = GameObject.Find("CardSpawnPoint").transform;
+        splineContainer = GameObject.Find("Spline").GetComponent<SplineContainer>();
         AlgorithmPlayer aiPlayer = aiPlayerObject.GetComponent<AlgorithmPlayer>();
 
         for (int i = 0; i < aiPlayer.Hand.Length; i++)
@@ -51,23 +52,36 @@ public class AlgorithmManager : MonoBehaviour
     {
         if (handCards.Count == 0) return;
 
-         float spacing = 1f / (handCards.Count + 1); // Prevent overlap
-        //float firstCardPosition = 0.5f - (handCards.Count - 1) * cardSpacing / 2;
+        float spacingMultiplier = 0.5f;
+        float totalWidth = spacingMultiplier;
+        float startOffset = (1f - totalWidth) / 2f;
+        float spacing = totalWidth / (handCards.Count + 1);
 
         Spline spline = splineContainer.Spline;
+
         for (int i = 0; i < handCards.Count; i++)
         {
-            float p = spacing + i * (i+1);
+            float t = startOffset + (spacing * (i + 1));
 
-            Vector3 splinePosition = spline.EvaluatePosition(p);
-            Vector3 forward = spline.EvaluateTangent(p);
-            Vector3 up = spline.EvaluateUpVector(p);
-            Quaternion rotation = Quaternion.LookRotation(forward, up);
+            // Get position in world space by transforming local position
+            Vector3 localPosition = spline.EvaluatePosition(t);
+            Vector3 worldPosition = splineContainer.transform.TransformPoint(localPosition);
+            Vector2 position2D = new Vector2(worldPosition.x, worldPosition.y);
 
-            //Quaternion rotation = Quaternion.LookRotation(up, Vector3.Cross(up, forward).normalized);
+            // Transform tangent to world space as well
+            Vector3 localTangent = spline.EvaluateTangent(t);
+            Vector3 worldTangent = splineContainer.transform.TransformDirection(localTangent);
+            Vector2 tangent2D = new Vector2(worldTangent.x, worldTangent.y).normalized;
 
-            handCards[i].transform.DOMove(splinePosition, 0.25f);
-            handCards[i].transform.DOLocalRotateQuaternion(rotation, 0.25f);
+            float angle = Mathf.Atan2(tangent2D.y, tangent2D.x) * Mathf.Rad2Deg;
+            Quaternion rotation = Quaternion.Euler(0f, 0f, angle);
+
+            Vector3 finalPosition = new Vector3(position2D.x, position2D.y, 0f);
+
+            handCards[i].transform.DOMove(finalPosition, 0.5f)
+                .SetEase(Ease.OutQuint);
+            handCards[i].transform.DORotateQuaternion(rotation, 0.5f)
+                .SetEase(Ease.OutQuint);
         }
     }
 }
