@@ -223,7 +223,8 @@ public class PokerGame : MonoBehaviour
     {
         foreach (GameObject m in managers)
         {
-            m.GetComponent<AlgorithmManager>().FlipCards();
+            m.GetComponent<AlgorithmPlayer>().Hand[0].IsFaceUp = true;
+            m.GetComponent<AlgorithmPlayer>().Hand[1].IsFaceUp = true;
         }
         foreach (var player in players)
         {
