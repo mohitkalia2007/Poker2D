@@ -17,7 +17,7 @@ namespace BaseGame
         [SerializeField] private Button callButton;
         [SerializeField] private Button raiseButton;
         [SerializeField] private Button allInButton;
-        List<PokerCard> playerHand = new List<PokerCard>();
+        public List<PokerCard> playerHand = new List<PokerCard>();
         void Start()
         {
             playerHand.Add(cards[0]);

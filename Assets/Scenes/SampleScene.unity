@@ -367,6 +367,9 @@ MonoBehaviour:
   callButton: {fileID: 0}
   raiseButton: {fileID: 0}
   allInButton: {fileID: 0}
+  playerHand:
+  - {fileID: 7330425857199417320, guid: 9148c75c2c92145d09aa584231072d02, type: 3}
+  - {fileID: 7330425857199417320, guid: 9148c75c2c92145d09aa584231072d02, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

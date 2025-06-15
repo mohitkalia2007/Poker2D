@@ -14,22 +14,30 @@ public class HandManager : MonoBehaviour
     [SerializeField] private Transform spawnPoint;
     private List<GameObject> handCards = new();
     public HumanPlayer humanPlayer;
-
+    
     private void Update()
     {
+        
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            DrawCard();
+            for (int i = 0; i < humanPlayer.playerHand.Count; i++)
+            {
+                String suit = humanPlayer.playerHand[i].GetSuit();
+                int num = humanPlayer.playerHand[i].GetCardNumber();
+                
+                DrawCard("diamonds", 2);
+            }
         }
     }
 
-    private void DrawCard()
+    private void DrawCard(String suit, int number)
     {
         if (handCards.Count >= maxHandSize)
         {
             return;
         }
         GameObject g = Instantiate(cardPrefab, spawnPoint.position, spawnPoint.rotation);
+        
         handCards.Add(g);
         
         UpdateCardPositions();
