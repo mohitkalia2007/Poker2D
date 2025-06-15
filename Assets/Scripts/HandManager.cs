@@ -21,9 +21,9 @@ public class HandManager : MonoBehaviour
         {
             for (int i = 0; i < 2; i++)
             {
-                //String suit = humanPlayer.Hand[i].GetSuit();
-                //int num = humanPlayer.Hand[i].GetCardNumber();
-                DrawCard("diamonds",2);
+                String suit = humanPlayer.playerHand[i].GetSuit();
+                int num = humanPlayer.playerHand[i].GetCardNumber();
+                DrawCard(suit,num);
             }
         }
     }
