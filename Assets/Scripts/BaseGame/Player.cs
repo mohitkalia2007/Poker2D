@@ -70,7 +70,7 @@ namespace BaseGame
         }
         
         public void Check() { LastAction = PlayerAction.Check; CurrentBet = 0; }
-        public abstract int MakeBet(PokerGame.BettingRound bettingRound, int minimum, List<Pot> pots);
+        public abstract int MakeBet(PokerGame.BettingRound bettingRound, int minimum, Pot pots);
         protected abstract int GetHighestCard();
     }
 }

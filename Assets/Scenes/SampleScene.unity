@@ -2323,6 +2323,14 @@ PrefabInstance:
       propertyPath: splineContainer
       value: 
       objectReference: {fileID: 123080362}
+    - target: {fileID: 8524328582257166238, guid: 6cc31bdcd1d7e8f449bc43b701c1c9ac, type: 3}
+      propertyPath: spawnPoint
+      value: 
+      objectReference: {fileID: 1481980570}
+    - target: {fileID: 8524328582257166238, guid: 6cc31bdcd1d7e8f449bc43b701c1c9ac, type: 3}
+      propertyPath: splineContainer
+      value: 
+      objectReference: {fileID: 123080362}
     - target: {fileID: 8593526004689533173, guid: 6cc31bdcd1d7e8f449bc43b701c1c9ac, type: 3}
       propertyPath: m_Name
       value: Player

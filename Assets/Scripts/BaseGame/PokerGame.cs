@@ -24,7 +24,7 @@ public class PokerGame : MonoBehaviour
     public Round round;
     public List<Player> players = new List<Player>();
     public List<GameObject> managers = new List<GameObject>();
-    List<Pot> pots = new List<Pot>{new Pot()};
+    Pot pots = new Pot();
     PokerCard[,] deck = new PokerCard[4, 13];
     string[] suits = { "diamonds", "spades", "hearts", "clubs" };
     private readonly System.Random random = new System.Random();
@@ -177,41 +177,6 @@ public class PokerGame : MonoBehaviour
             }
         }
     }
-    void CreatePots(List<Player> players, List<Pot> pots)
-    {
-        // Get distinct bet amounts in ascending order
-        var allInAmounts = players.Where(p => p.CurrentBet > 0).Select(p => p.Stack).Distinct().OrderBy(b => b).ToList();
-
-        int previous = 0;
-
-        foreach (int level in allInAmounts) {
-            int potSize = 0;
-            var eligible = new HashSet<Player>();
-
-            foreach (var player in players)
-            {
-                int contribution = Math.Min(level - previous, player.CurrentBet);
-                if (contribution > 0) {
-                    potSize += contribution;
-                    player.CurrentBet -= contribution;
-                    if (player.LastAction != Player.PlayerAction.Fold) eligible.Add(player);
-                }
-            }
-            if (potSize > 0) pots.Add(new Pot { Amount = potSize, EligiblePlayers = eligible });
-            previous = level;
-        }
-    }
-    void ResolvePots(List<Pot> pots)
-    {
-        foreach (Pot pot in pots)
-        {
-            var contenders = pot.EligiblePlayers.Where(p => !(p.LastAction != Player.PlayerAction.Fold)).ToList();
-            if (contenders.Count == 0) continue;
-
-            var winners = round.DeclareWinner(contenders);
-            foreach (Player winner in winners) winner.Stack += pot.Amount;
-        }
-    }
     bool AnyoneIsAllIn()
     {
         int count = 0;
@@ -242,15 +207,13 @@ public class PokerGame : MonoBehaviour
     {
         bettingRound = BettingRound.River;
         ProcessBettingRound(BettingRound.River);
-        if (AnyoneIsAllIn()) CreatePots(players, pots);  
     }
     void ShowDown() // reveal all cards and declare winner and split pot
     {
-        ResolvePots(pots);
         foreach (var player in players) {
             player.Stack = 0;
             player.CurrentBet = 0;
         }
-        pots.Clear();
+        pots = null;
     }
 }
