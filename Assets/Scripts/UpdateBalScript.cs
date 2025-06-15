@@ -26,15 +26,6 @@ public class UpdateBalScript : MonoBehaviour
         {
             balanceText.text = "Balance: $" + player.Balance.ToString();
         }
-<<<<<<< HEAD
 
-        if (potBalance != null && pokerGame != null && pokerGame.pots != null)
-        {
-            potBalance.text = "Pot Balance: $" + pokerGame.pots.Amount.ToString();
-        }
-=======
-        
-        //potBalance.text = "Pot Balance: $" + FindFirstObjectByType<PokerGame>().Amount.ToString();
->>>>>>> 3bf2f1e39452a564907bb65ae874a32dcf6b7d22
     }
 }
