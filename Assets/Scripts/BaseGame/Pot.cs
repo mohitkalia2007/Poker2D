@@ -5,6 +5,6 @@ using BaseGame;
 
 public class Pot 
 {
-    public int Amount;
+    public int Amount =0;
     public HashSet<Player> EligiblePlayers;
 }
