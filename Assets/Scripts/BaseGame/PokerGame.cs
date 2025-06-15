@@ -31,7 +31,8 @@ public class PokerGame : MonoBehaviour
     public BettingRound bettingRound { get; private set; }
     void Start()
     {
-        for (int i = 0; i < humanPlayerCount; i++) { players.Add(new HumanPlayer()); }
+        players.Add(round.humanPlayer);
+        // for (int i = 0; i < humanPlayerCount; i++) { players.Add(new HumanPlayer()); }
         for (int i = 0; i < algorithmPlayerCount; i++) { players.Add(new AlgorithmPlayer(this)); }
         foreach (Player player in players) { round.AddPlayer(player); }
         for (int i = 0; i < deck.GetLength(0); i++)
