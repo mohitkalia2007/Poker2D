@@ -12,20 +12,18 @@ public class HandManager : MonoBehaviour
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private SplineContainer splineContainer;
     [SerializeField] private Transform spawnPoint;
+    [SerializeField] private HumanPlayer humanPlayer;
     private List<GameObject> handCards = new();
-    public HumanPlayer humanPlayer;
-    
+
     private void Update()
     {
-        
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            for (int i = 0; i < humanPlayer.playerHand.Count; i++)
+            for (int i = 0; i < 2; i++)
             {
-                String suit = humanPlayer.playerHand[i].GetSuit();
-                int num = humanPlayer.playerHand[i].GetCardNumber();
-                
-                DrawCard("diamonds", 2);
+                //String suit = humanPlayer.Hand[i].GetSuit();
+                //int num = humanPlayer.Hand[i].GetCardNumber();
+                DrawCard("diamonds",2);
             }
         }
     }
@@ -37,9 +35,12 @@ public class HandManager : MonoBehaviour
             return;
         }
         GameObject g = Instantiate(cardPrefab, spawnPoint.position, spawnPoint.rotation);
-        
-        handCards.Add(g);
-        
+        /*PokerCard pokerCardScript = g.GetComponent<PokerCard>();
+        pokerCardScript.SetSuit(suit);
+        Debug.Log(pokerCardScript.GetSuit());
+        pokerCardScript.SetCardNumber(number);
+        Debug.Log(pokerCardScript.GetCardNumber());
+        */handCards.Add(g);
         UpdateCardPositions();
     }
     
