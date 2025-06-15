@@ -216,7 +216,12 @@ public class PokerGame : MonoBehaviour
     }
     void ShowDown() // reveal all cards and declare winner and split pot
     {
-        foreach (var player in players) {
+        foreach (GameObject m in managers)
+        {
+            m.GetComponent<AlgorithmManager>().FlipCards();
+        }
+        foreach (var player in players)
+        {
             player.Stack = 0;
             player.CurrentBet = 0;
         }
