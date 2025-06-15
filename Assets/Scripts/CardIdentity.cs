@@ -67,7 +67,7 @@ public class CardIdentity : MonoBehaviour
 				        sr.sprite = clubsKing;
 				        break;
 		        }
-				Debug.Log("clubs");
+				//Debug.Log("clubs");
 			} else if (suit.Equals("diamonds"))
 	        {
 		        switch (number)
@@ -112,7 +112,7 @@ public class CardIdentity : MonoBehaviour
 				        sr.sprite = diamondsKing;
 				        break;
 		        }
-		        Debug.Log("diamonds");
+		        //Debug.Log("diamonds");
 	        } else if (suit.Equals("hearts"))
 	        {
 		        switch (number)
@@ -157,7 +157,7 @@ public class CardIdentity : MonoBehaviour
 				        sr.sprite = heartsKing;
 				        break;
 		        }
-		        Debug.Log("hearts");
+		        //Debug.Log("hearts");
 	        }
 			else if (suit.Equals("spades")){
 				switch (number)
@@ -202,7 +202,7 @@ public class CardIdentity : MonoBehaviour
 						sr.sprite = spadesKing;
 						break;
 				}
-				Debug.Log("spades");
+				//Debug.Log("spades");
 			}
 			else
 			{

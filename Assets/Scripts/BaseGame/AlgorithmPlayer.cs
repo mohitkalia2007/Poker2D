@@ -14,7 +14,6 @@ namespace BaseGame
 {
     public class AlgorithmPlayer : Player 
     {
-        public AlgorithmManager algorithmManager;
         PokerGame game;
         void Start()
         {

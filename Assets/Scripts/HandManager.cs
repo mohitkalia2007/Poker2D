@@ -23,9 +23,7 @@ public class HandManager : MonoBehaviour
             {
                 HumanPlayer player = humanPlayer.GetComponent<HumanPlayer>();
                 String suit = player.Hand[i].GetSuit();
-                Debug.Log(suit);
                 int num = player.Hand[i].GetCardNumber();
-                Debug.Log(num);
                 DrawCard(suit,num);
             }
         }
@@ -40,9 +38,7 @@ public class HandManager : MonoBehaviour
         GameObject g = Instantiate(cardPrefab, spawnPoint.position, spawnPoint.rotation);
         PokerCard pokerCardScript = g.GetComponent<PokerCard>();
         pokerCardScript.SetSuit(suit);
-        Debug.Log(pokerCardScript.GetSuit());
         pokerCardScript.SetCardNumber(number);
-        Debug.Log(pokerCardScript.GetCardNumber());
         handCards.Add(g);
         UpdateCardPositions();
     }
