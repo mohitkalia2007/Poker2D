@@ -3,10 +3,11 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
 using BaseGame;
+using TMPro;
 public class UpdateBalScript : MonoBehaviour
 {
     public Player player;
-    public Text balanceText;
+    public TextMeshProUGUI balanceText; // Changed from Text to TextMeshProUGUI
     void Update()
     {
         if (balanceText != null && player != null)
