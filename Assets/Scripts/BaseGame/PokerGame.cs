@@ -24,7 +24,7 @@ public class PokerGame : MonoBehaviour
     public Round round;
     public List<Player> players = new List<Player>();
     public List<GameObject> managers = new List<GameObject>();
-    Pot pots = new Pot();
+    public Pot pots = new Pot();
     PokerCard[,] deck = new PokerCard[4, 13];
     string[] suits = { "diamonds", "spades", "hearts", "clubs" };
     private readonly System.Random random = new System.Random();
