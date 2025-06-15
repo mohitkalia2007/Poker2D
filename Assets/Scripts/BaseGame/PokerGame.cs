@@ -50,8 +50,9 @@ public class PokerGame : MonoBehaviour
         {
             GameObject newAlgorithmPlayer = Instantiate(algorithmPlayer);
             GameObject newManager = Instantiate(algorithmPlayerManager);  // Create new variable for instance
-            AlgorithmManager newAlgorithmManager = newAlgorithmPlayer.GetComponent<AlgorithmManager>();
+            AlgorithmManager newAlgorithmManager = newManager.GetComponent<AlgorithmManager>();
             newAlgorithmManager.splineContainer = availableSplines[i];
+            Debug.Log("changed the splines");
             if (newManager != null && newManager.GetComponent<AlgorithmManager>() != null)
             {
                 newManager.GetComponent<AlgorithmManager>().aiPlayerObject = newAlgorithmPlayer;
