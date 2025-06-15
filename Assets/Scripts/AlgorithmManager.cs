@@ -31,10 +31,6 @@ public class AlgorithmManager : MonoBehaviour
             DrawCard(suit, number);
         }
     }
-    public void FlipCards()
-    {
-        //gray_back();
-    }
     private void DrawCard(string suit, int number)
     {
         if (handCards.Count >= maxHandSize)
