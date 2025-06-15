@@ -7,12 +7,15 @@ using TMPro;
 public class UpdateBalScript : MonoBehaviour
 {
     public Player player;
-    public TextMeshProUGUI balanceText; // Changed from Text to TextMeshProUGUI
+    public TextMeshProUGUI balanceText;
+    public TextMeshProUGUI potBalance;  // Changed from Text to TextMeshProUGUI
     void Update()
     {
         if (balanceText != null && player != null)
         {
             balanceText.text = "Balance: $" + player.Balance.ToString();
         }
+        
+        potBalance.text = "Pot Balance: $" + FindFirstObjectByType<PokerGame>().Amount.ToString();
     }
 }

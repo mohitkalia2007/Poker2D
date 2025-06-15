@@ -51,17 +51,20 @@ public class AlgorithmManager : MonoBehaviour
     {
         if (handCards.Count == 0) return;
 
-        float cardSpacing = 1f / maxHandSize;
-        float firstCardPosition = 0.5f - (handCards.Count - 1) * cardSpacing / 2;
+         float spacing = 1f / (handCards.Count + 1); // Prevent overlap
+        //float firstCardPosition = 0.5f - (handCards.Count - 1) * cardSpacing / 2;
 
         Spline spline = splineContainer.Spline;
         for (int i = 0; i < handCards.Count; i++)
         {
-            float p = firstCardPosition + i * cardSpacing;
+            float p = spacing + i * (i+1);
+
             Vector3 splinePosition = spline.EvaluatePosition(p);
             Vector3 forward = spline.EvaluateTangent(p);
             Vector3 up = spline.EvaluateUpVector(p);
-            Quaternion rotation = Quaternion.LookRotation(up, Vector3.Cross(up, forward).normalized);
+            Quaternion rotation = Quaternion.LookRotation(forward, up);
+
+            //Quaternion rotation = Quaternion.LookRotation(up, Vector3.Cross(up, forward).normalized);
 
             handCards[i].transform.DOMove(splinePosition, 0.25f);
             handCards[i].transform.DOLocalRotateQuaternion(rotation, 0.25f);

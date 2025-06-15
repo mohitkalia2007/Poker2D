@@ -19,13 +19,13 @@ namespace BaseGame
         {
             game = GameObject.FindGameObjectWithTag("GameController").GetComponent<PokerGame>();
         }
-        public override int MakeBet(PokerGame.BettingRound bettingRound, int minimum, List<Pot> pots) // Makes a bet based on effective hand strength, pot size, and amount of time spent 
+        public override int MakeBet(PokerGame.BettingRound bettingRound, int minimum, Pot pots) // Makes a bet based on effective hand strength, pot size, and amount of time spent 
         {
         // Calculate effective hand strength based on current cards
         double ehs = EffectiveHS(bettingRound);
 
         // Get pot size and number of active players
-        int potSize = 10; //TotalPot();
+        int potSize = pots.Amount;
         
         GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag("Player");
         int activePlayers = taggedObjects.Length;
