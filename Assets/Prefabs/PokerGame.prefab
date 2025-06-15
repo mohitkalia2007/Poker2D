@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4997436234055667667
+--- !u!1 &3750998389520306934
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6347849773563278842}
-  - component: {fileID: 1020865073377796641}
-  - component: {fileID: 465053438272135474}
+  - component: {fileID: 2975853865929156831}
+  - component: {fileID: 9186951330523987716}
+  - component: {fileID: 8584000857437027351}
   m_Layer: 0
   m_Name: PokerGame
   m_TagString: Untagged
@@ -18,13 +18,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6347849773563278842
+--- !u!4 &2975853865929156831
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4997436234055667667}
+  m_GameObject: {fileID: 3750998389520306934}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.6517641, y: 0.123212874, z: 0.0034839676}
@@ -33,13 +33,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1020865073377796641
+--- !u!114 &9186951330523987716
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4997436234055667667}
+  m_GameObject: {fileID: 3750998389520306934}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b78307266d36449deb1bd0b2a7ea5d49, type: 3}
@@ -48,16 +48,18 @@ MonoBehaviour:
   bigBlind: 10
   humanPlayerCount: 1
   algorithmPlayerCount: 5
-  round: {fileID: 465053438272135474}
+  algorithmPlayer: {fileID: 4097232232465359715, guid: 4df0427f39615d64c8df08d0a0367969, type: 3}
+  pokerCard: {fileID: 3944393318081206655, guid: c16660f149f92804dab3c01b95a1f3d1, type: 3}
+  round: {fileID: 8584000857437027351}
   players: []
   currentBet: 0
---- !u!114 &465053438272135474
+--- !u!114 &8584000857437027351
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4997436234055667667}
+  m_GameObject: {fileID: 3750998389520306934}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8dd0b53e760d2423292757d34fc255b1, type: 3}

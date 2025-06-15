@@ -13,8 +13,8 @@ namespace BaseGame
         private bool isFaceUp = false;
         List<string> suits = new List<string>{ "diamond", "spade", "heart", "club" };
         public bool IsFaceUp { get { return isFaceUp; } set { isFaceUp = value; } }
-        public PokerCard(int number, string suit)
-        {
+        public void Init(int number, string suit)
+        { 
             num = number;
             this.suit = suit;
         }

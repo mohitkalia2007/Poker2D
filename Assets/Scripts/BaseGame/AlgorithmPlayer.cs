@@ -223,8 +223,11 @@ namespace BaseGame
 
             for (int i = 0; i < 4; i++)
                 for (int j = 0; j < 13; i++)
-                    deck[i*j] = new PokerCard(j + 2, suits[i]);
-
+                {
+                    deck[i*j] = new PokerCard();
+                    deck[i * j].Init(j + 2, suits[i]);
+                }
+                    
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 13; j++)

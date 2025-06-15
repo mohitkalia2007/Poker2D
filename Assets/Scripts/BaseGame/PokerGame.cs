@@ -17,7 +17,9 @@ public class PokerGame : MonoBehaviour
     public int bigBlind;
     public int humanPlayerCount;
     public int algorithmPlayerCount;
-    public Round round = new Round();
+    public GameObject algorithmPlayer;
+    public GameObject pokerCard;
+    public Round round;
     public List<Player> players;
     List<Pot> pots = new List<Pot>{new Pot()};
     PokerCard[,] deck = new PokerCard[4, 13];
@@ -32,14 +34,17 @@ public class PokerGame : MonoBehaviour
     void Start()
     {
         players.Add(round.humanPlayer);
-        // for (int i = 0; i < humanPlayerCount; i++) { players.Add(new HumanPlayer()); }
-        for (int i = 0; i < algorithmPlayerCount; i++) { players.Add(new AlgorithmPlayer(this)); }
+        for (int i = 0; i < algorithmPlayerCount; i++)
+        {
+            players.Add(algorithmPlayer.GetComponent<AlgorithmPlayer>());
+        }
         foreach (Player player in players) { round.AddPlayer(player); }
         for (int i = 0; i < deck.GetLength(0); i++)
         {
             for (int j = 0; j < deck.GetLength(1); i++)
             {
-                deck[i, j] = new PokerCard(j + 2, suits[i]);
+                deck[i, j] = pokerCard.GetComponent<PokerCard>();
+                pokerCard.GetComponent<PokerCard>().Init(j + 2, suits[i]);
             }
         }
         foreach (Player player in players)
