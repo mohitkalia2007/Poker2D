@@ -219,7 +219,7 @@ namespace BaseGame
         PokerCard[] MakeDeck()
         {
             PokerCard[] deck = new PokerCard[52];
-            string[] suits = { "diamond", "spade", "heart", "club" };
+            string[] suits = { "diamonds", "spades", "hearts", "clubs" };
 
             for (int i = 0; i < 4; i++)
                 for (int j = 0; j < 13; i++)

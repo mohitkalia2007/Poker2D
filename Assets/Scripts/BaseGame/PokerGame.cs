@@ -18,12 +18,13 @@ public class PokerGame : MonoBehaviour
     public int humanPlayerCount;
     public int algorithmPlayerCount;
     public GameObject algorithmPlayer;
+    public GameObject humanPlayer;
     public GameObject pokerCard;
     public Round round;
     public List<Player> players;
     List<Pot> pots = new List<Pot>{new Pot()};
     PokerCard[,] deck = new PokerCard[4, 13];
-    string[] suits = { "diamond", "spade", "heart", "club" };
+    string[] suits = { "diamonds", "spades", "hearts", "clubs" };
     private readonly System.Random random = new System.Random();
     public int currentBet = 0;
     public enum BettingRound
@@ -33,7 +34,9 @@ public class PokerGame : MonoBehaviour
     public BettingRound bettingRound { get; private set; }
     void Start()
     {
-        players.Add(round.humanPlayer);
+        humanPlayer = GameObject.FindWithTag("Player");
+        players.Add(humanPlayer.GetComponent<HumanPlayer>());
+
         for (int i = 0; i < algorithmPlayerCount; i++)
         {
             players.Add(algorithmPlayer.GetComponent<AlgorithmPlayer>());

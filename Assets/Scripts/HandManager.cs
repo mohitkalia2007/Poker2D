@@ -12,7 +12,7 @@ public class HandManager : MonoBehaviour
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private SplineContainer splineContainer;
     [SerializeField] private Transform spawnPoint;
-    [SerializeField] private HumanPlayer humanPlayer;
+    [SerializeField] private GameObject humanPlayer;
     private List<GameObject> handCards = new();
 
     private void Update()
@@ -21,9 +21,10 @@ public class HandManager : MonoBehaviour
         {
             for (int i = 0; i < 2; i++)
             {
-                String suit = humanPlayer.playerHand[i].GetSuit();
+                HumanPlayer player = humanPlayer.GetComponent<HumanPlayer>();
+                String suit = player.Hand[i].GetSuit();
                 Debug.Log(suit);
-                int num = humanPlayer.playerHand[i].GetCardNumber();
+                int num = player.Hand[i].GetCardNumber();
                 Debug.Log(num);
                 DrawCard(suit,num);
             }
