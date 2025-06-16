@@ -9,42 +9,51 @@ public class UpdateBalScript : MonoBehaviour
     public Player player;
     public TextMeshProUGUI balanceText;
     public TextMeshProUGUI potBalance;  // Changed from Text to TextMeshProUGUI
-    private PokerGame pokerGame;
+    public PokerGame pokerGame;
 
     void Start()
     {
-        GameObject pokerGameObj = GameObject.Find("PokerGame");
-        if (pokerGameObj != null)
-        {
-            pokerGame = pokerGameObj.GetComponent<PokerGame>();
-            potBalance.text = "Pot: $" + pokerGame.pots.Amount.ToString();
+        // Find the PokerGame clone in the scene
 
-        }
-        else
-        {
-            potBalance.text = "Pot: $0";
-        }
+    try
+    {
+          pokerGame = GameObject.Find("PokerGame(Clone)").GetComponent<PokerGame>();
+    }
+    catch (System.Exception e)
+    {
+        Debug.LogError("Could not find game instance: " + e.Message);
+    }
+
+    
+   
+        
     }
 
     void Update()
+    
     {
         if (balanceText != null && player != null)
         {
             balanceText.text = "Balance: $" + player.Balance.ToString();
         }
-        GameObject pokerGameObj = GameObject.Find("PokerGame");
-        if (pokerGameObj != null)
-        {
 
-            pokerGame = pokerGameObj.GetComponent<PokerGame>();
-            potBalance.text = "Pot: $" + pokerGame.pots.Amount.ToString();
-            Debug.Log($"Pot Updated: ${pokerGame.pots}");
-            
-        }
-        else
-        {
-            potBalance.text = "Pot: $0";
-        }
+        UpdatePotDisplay();
 
+    }
+    private void UpdatePotDisplay()
+    {
+         try
+             {
+          pokerGame = GameObject.Find("PokerGame(Clone)").GetComponent<PokerGame>();
+             }
+            catch (System.Exception e)
+            {
+            Debug.LogError("Could not find game instance: " + e.Message);
+        }
+        if (pokerGame != null && pokerGame.pots != null && potBalance != null)
+        {
+            potBalance.text = $"Pot: $" + pokerGame.pots.Amount.ToString();
+            Debug.Log($"Current Pot: ${pokerGame.pots.Amount}"); // Debug line
+        }
     }
 }

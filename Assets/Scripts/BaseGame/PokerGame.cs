@@ -357,6 +357,6 @@ public class PokerGame : MonoBehaviour
             player.Stack = 0;
             player.CurrentBet = 0;
         }
-        pots = null;
+        pots.Amount = 0;
     }
 }
