@@ -52,6 +52,8 @@ MonoBehaviour:
   aiPlayerObject: {fileID: 0}
   spacingMultiplier: 0.75
   textPrefab: {fileID: 4611460091485939166, guid: 0c61effd99eb1e34991bb5528dd2d3c3, type: 3}
+  lastMove: {fileID: 8371866932525337642, guid: 95863610195b21544ab6d142cc8d9eec, type: 3}
+  canvas: {fileID: 0}
 --- !u!1 &7183194049715792284
 GameObject:
   m_ObjectHideFlags: 0

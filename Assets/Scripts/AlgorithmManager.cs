@@ -17,8 +17,11 @@ public class AlgorithmManager : MonoBehaviour
     [SerializeField] float spacingMultiplier = .750f;
     private List<GameObject> handCards = new();
     int dispBal = 0;
-    [SerializeField] private GameObject textPrefab; // Assign TMP prefab in inspector
+    [SerializeField] private GameObject textPrefab;
+    
+    [SerializeField] private GameObject lastMove; // Assign TMP prefab in inspector
     private TMP_Text balanceText;
+    private TMP_Text  lastMoveText;
     public Canvas canvas;
     void Start()
     {
@@ -26,6 +29,9 @@ public class AlgorithmManager : MonoBehaviour
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         GameObject textObj = Instantiate(textPrefab, Vector3.zero, Quaternion.identity, canvas.transform);
         balanceText = textObj.GetComponent<TMP_Text>();
+
+        GameObject textObj2 = Instantiate(lastMove, Vector3.zero, Quaternion.identity, canvas.transform);
+        lastMoveText = textObj2.GetComponent<TMP_Text>();
         
         if (balanceText == null)
         {
@@ -50,8 +56,10 @@ public class AlgorithmManager : MonoBehaviour
         Vector3 worldPosition = splineContainer.transform.TransformPoint(localPosition);
         
         // Update text position and content
-        Vector3 offset = new Vector3(-1.2f, 0f, 0f); // Adjust these values as needed
+        Vector3 offset = new Vector3(-1.4f, 0.3f, 0f); // Adjust these values as needed
         balanceText.transform.position = worldPosition +offset;
+        lastMoveText.transform.position = worldPosition + offset + new Vector3(0f, -0.5f, 0f);
+        UpdateLastMoveText();
         UpdateBalanceText();
     }
 
@@ -60,6 +68,14 @@ public class AlgorithmManager : MonoBehaviour
         if (balanceText != null)
         {
             balanceText.text = $"Balance: ${dispBal}";
+        }
+    }
+
+    private void UpdateLastMoveText()
+    {
+        if (lastMoveText != null)
+        {
+            lastMoveText.text = $"Last Move:  \n" + aiPlayerObject.GetComponent<AlgorithmPlayer>().LastAction.ToString();
         }
     }
     // Call this from your game logic
