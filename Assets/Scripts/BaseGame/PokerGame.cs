@@ -264,7 +264,6 @@ public class PokerGame : MonoBehaviour
         foreach (Player p in players)
         {
             p.IsTurn = true;
-            p.LastAction = Player.PlayerAction.None;
         }
         await ProcessBettingRound(BettingRound.Flop);
     }
@@ -277,7 +276,6 @@ public class PokerGame : MonoBehaviour
         foreach (Player p in players)
         {
             p.IsTurn = true;
-            p.LastAction = Player.PlayerAction.None;
         }
         await ProcessBettingRound(BettingRound.Turn);
     }
@@ -290,7 +288,6 @@ public class PokerGame : MonoBehaviour
         foreach (Player p in players)
         {
             p.IsTurn = true;
-            p.LastAction = Player.PlayerAction.None;
         }
         await ProcessBettingRound(BettingRound.River);
     }
@@ -329,6 +326,7 @@ public class PokerGame : MonoBehaviour
                 
                 await Task.Delay(1000);
                 ShowDown();
+                await Task.Delay(5000);
                 SceneManager.LoadScene("WinnerScene");
                 Debug.Log("ShowDown complete");
             }
