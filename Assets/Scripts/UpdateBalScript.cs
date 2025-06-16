@@ -9,11 +9,13 @@ public class UpdateBalScript : MonoBehaviour
     public Player player;
     public TextMeshProUGUI balanceText;
     public TextMeshProUGUI potBalance;  // Changed from Text to TextMeshProUGUI
-    private PokerGame pokerGame;
+    public PokerGame pokerGame;
+    GameObject pokerGameObj;
+
 
     void Start()
     {
-        GameObject pokerGameObj = GameObject.Find("PokerGame");
+        pokerGameObj = GameObject.Find("PokerGame");
         if (pokerGameObj != null)
         {
             pokerGame = pokerGameObj.GetComponent<PokerGame>();
@@ -32,14 +34,10 @@ public class UpdateBalScript : MonoBehaviour
         {
             balanceText.text = "Balance: $" + player.Balance.ToString();
         }
-        GameObject pokerGameObj = GameObject.Find("PokerGame");
-        if (pokerGameObj != null)
+        if (pokerGame != null && pokerGame.pots != null)
         {
-
-            pokerGame = pokerGameObj.GetComponent<PokerGame>();
-            potBalance.text = "Pot: $" + pokerGame.pots.ToString();
-            Debug.Log($"Pot Updated: ${pokerGame.pots}");
-            
+            potBalance.text = $"Pot: ${pokerGame.pots.Amount}";
+            Debug.Log($"Pot Updated: ${pokerGame.pots.Amount}");
         }
         else
         {
