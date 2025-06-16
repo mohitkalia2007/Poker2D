@@ -42,7 +42,6 @@ namespace BaseGame
 
             SetButtonsInteractable(false);
         }
-
         public override async Task<int> MakeBet(PokerGame.BettingRound bettingRound, int minimum, Pot pots)
         {
             currentBettingRound = bettingRound;
@@ -106,6 +105,7 @@ namespace BaseGame
             if (!isWaitingForAction) return;
             
             LastAction = PlayerAction.Check;
+            CurrentBet = 0; 
             isWaitingForAction = false;
             SetButtonsInteractable(false);
             betTaskSource?.SetResult(CurrentBet);

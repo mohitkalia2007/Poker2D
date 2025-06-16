@@ -42,7 +42,7 @@ namespace BaseGame
 
             double ehs = EffectiveHS(bettingRound);
             int potSize = pots.Amount;
-            int minBet = game.currentBet;
+            int minBet = minimum;
             int betAmount = 0;
             
             // More conservative thresholds and betting amounts

@@ -46,6 +46,7 @@ public class PokerGame : MonoBehaviour
     public BettingRound bettingRound { get; private set; }
     void Start()
     {
+        
         communityManager = GameObject.Find("CommunityManager").GetComponent<CommunityManager>();
         availableSplines.Clear();
         humanPlayer = GameObject.FindWithTag("Player");
@@ -219,7 +220,7 @@ public class PokerGame : MonoBehaviour
                     
                     Debug.Log($"Player bet: {playerBet}, LastAction: {player.LastAction}");
                     pots.Amount += playerBet;
-                    if (playerBet > currentBet)
+                    if (playerBet >= currentBet)
                     {
                         currentBet = playerBet;
                         bettingComplete = false;
@@ -348,7 +349,7 @@ public class PokerGame : MonoBehaviour
         {
             SceneManager.LoadScene("WinnerScene");
         }
-        else
+        else if (!winners.Contains(players[0]))
         {
             SceneManager.LoadScene("LosingScene");
         }

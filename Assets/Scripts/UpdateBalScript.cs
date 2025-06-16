@@ -48,12 +48,11 @@ public class UpdateBalScript : MonoBehaviour
              }
             catch (System.Exception e)
             {
-            Debug.LogError("Could not find game instance: " + e.Message);
-        }
+            }
         if (pokerGame != null && pokerGame.pots != null && potBalance != null)
         {
             potBalance.text = $"Pot: $" + pokerGame.pots.Amount.ToString();
-            Debug.Log($"Current Pot: ${pokerGame.pots.Amount}"); // Debug line
+            //Debug.Log($"Current Pot: ${pokerGame.pots.Amount}"); // Debug line
         }
     }
 }
