@@ -17,15 +17,10 @@ namespace BaseGame
         public List<PokerCard> knownCards;
         public PokerCard[] HouseHand { get { return houseHand; } set { houseHand = value; } }
         public void AddPlayer(Player player) { players.Add(player); }
-        void Start()
-        {
-            communityManager = GameObject.Find("CommunityManager").GetComponent<CommunityManager>();
-        }
         public void NextCard()
         {
             if (knownCardCount < houseHand.Length) knownCards.Add(houseHand[knownCardCount]);
             knownCards.ElementAt(knownCardCount).IsFaceUp = true;
-            communityManager.GetComponent<CommunityManager>().DrawCard(knownCards.ElementAt(knownCardCount).GetSuit(), knownCards.ElementAt(knownCardCount).GetCardNumber());
             knownCardCount++;
         }
         public List<Player> DeclareWinner(List<Player> players)

@@ -168,11 +168,10 @@ public class PokerGame : MonoBehaviour
         {
             m.GetComponent<AlgorithmManager>().DisplayAIHand();
         }
-        round.NextCard();
-        round.NextCard();
-        round.NextCard();
-        round.NextCard();
-        round.NextCard();
+        foreach (PokerCard c in round.HouseHand)
+        {
+            communityManager.GetComponent<CommunityManager>().DrawCard(c.GetSuit(), c.GetCardNumber());
+        }
     }
     private void ProcessBettingRound(BettingRound bettingRound)
     {
@@ -218,23 +217,27 @@ public class PokerGame : MonoBehaviour
     }
     public void Flop() //betting round after first three cards are revealed
     {
-        communityManager.handCards[0].GetComponent<PokerCard>().IsFaceUp = true;
-        communityManager.handCards[1].GetComponent<PokerCard>().IsFaceUp = true;
-        communityManager.handCards[2].GetComponent<PokerCard>().IsFaceUp = true;
+        round.NextCard();
+        round.NextCard();
+        round.NextCard();
         bettingRound = BettingRound.Flop;
         ProcessBettingRound(BettingRound.Flop);
     }
     public void Turn() //betting round before final card reveal
     {
+        round.NextCard();
         communityManager.handCards[3].GetComponent<PokerCard>().IsFaceUp = true;
         bettingRound = BettingRound.Turn;
-        ProcessBettingRound(BettingRound.Turn);
+        ProcessBettingRound(BettingRound.Turn);   
+
     }
     public void River() //final betting round
     {
+        round.NextCard();
         communityManager.handCards[4].GetComponent<PokerCard>().IsFaceUp = true;
         bettingRound = BettingRound.River;
         ProcessBettingRound(BettingRound.River);
+    
     }
     public void ShowDown() // reveal all cards and declare winner and split pot
     {
