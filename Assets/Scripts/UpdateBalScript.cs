@@ -17,6 +17,8 @@ public class UpdateBalScript : MonoBehaviour
         if (pokerGameObj != null)
         {
             pokerGame = pokerGameObj.GetComponent<PokerGame>();
+            potBalance.text = "Pot: $" + pokerGame.pots.ToString();
+            
         }
     }
 
@@ -25,6 +27,13 @@ public class UpdateBalScript : MonoBehaviour
         if (balanceText != null && player != null)
         {
             balanceText.text = "Balance: $" + player.Balance.ToString();
+        }
+        GameObject pokerGameObj = GameObject.Find("PokerGame");
+        if (pokerGameObj != null)
+        {
+            pokerGame = pokerGameObj.GetComponent<PokerGame>();
+            potBalance.text = "Pot: $" + pokerGame.pots.ToString();
+            
         }
 
     }
