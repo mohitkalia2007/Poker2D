@@ -23,84 +23,88 @@ namespace BaseGame
         }
         public override async Task<int> MakeBet(PokerGame.BettingRound bettingRound, int minimum, Pot pots)
         {
+            // Handle preflop differently
             if (bettingRound == PokerGame.BettingRound.PreFlop)
             {
-                Call(minimum);
-                return minimum;
+                // Simple preflop strategy
+                double random = UnityEngine.Random.value;
+                if (random < 0.2) // 20% chance to fold weak hands
+                {
+                    Fold();
+                    return 0;
+                }
+                else
+                {
+                    Call(minimum);
+                    return minimum;
+                }
             }
-            // Calculate effective hand strength based on current cards
+
             double ehs = EffectiveHS(bettingRound);
-
-            // Get pot size and number of active players
             int potSize = pots.Amount;
-
-            GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag("Player");
-            int activePlayers = taggedObjects.Length;
-
-            // Get minimum bet required to call
             int minBet = game.currentBet;
             int betAmount = 0;
-
-            // Conservative baseline strategy based on EHS, pot odds and number of players
-            if (ehs > 0.8) // Very strong hand
+            
+            // More conservative thresholds and betting amounts
+            if (ehs > 0.8) // Very strong hand (reduced from 0.95)
             {
-                // Raise 3x pot if few players, 2x if many players
-                if (activePlayers <= 3)
-                {
-                    betAmount = Math.Max(minBet, potSize * 3);
-                    Raise(betAmount);
-                }
-                else
-                {
-                    betAmount = Math.Max(minBet, potSize * 2);
-                    Raise(betAmount);
-                }
-            }
-            else if (ehs > 0.6) // Strong hand
-            {
-                // Raise 2x minimum bet with few players, call with many
-                if (activePlayers <= 3)
-                {
-                    betAmount = Math.Max(minBet, potSize * 2);
-                    Raise(betAmount);
-                }
-                else
-                {
-                    betAmount = minBet;
-                    Call(betAmount);
-                }
-            }
-            else if (ehs > 0.4) // Medium strength hand
-            {
-                // Call if pot odds are good (pot size > 5x min bet)
-                if (potSize > (minBet * 5))
+                betAmount = Math.Min(Balance, Math.Max(minBet, potSize / 2));
+                if (betAmount > Balance / 2) // Prevent too aggressive betting
                 {
                     betAmount = minBet;
                     Call(betAmount);
                 }
                 else
                 {
+                    Raise(betAmount);
+                }
+            }
+            else if (ehs > 0.6) // Strong hand (reduced from 0.75)
+            {
+                if (minBet < Balance / 4) // Only call if bet is reasonable
+                {
+                    betAmount = minBet;
+                    Call(betAmount);
+                }
+                else
+                {
+                    Fold();
                     betAmount = 0;
-                    Fold(); // Fold
+                }
+            }
+            else if (ehs > 0.4) // Medium strength hand (reduced from 0.5)
+            {
+                if (minBet == 0)
+                {
+                    Check();
+                    betAmount = 0;
+                }
+                else if (potSize > (minBet * 3) && minBet < Balance / 5)
+                {
+                    betAmount = minBet;
+                    Call(betAmount);
+                }
+                else
+                {
+                    Fold();
+                    betAmount = 0;
                 }
             }
             else // Weak hand
             {
                 if (minBet == 0)
                 {
+                    Check();
                     betAmount = 0;
-                    Check(); // Free to check
                 }
                 else
                 {
+                    Fold();
                     betAmount = 0;
-                    Fold(); // fold
                 }
             }
 
-            // Add a small delay to simulate "thinking"
             await Task.Delay(500);
-            
             Debug.Log($"AI player bet: {betAmount}, EHS: {ehs}");
             return betAmount;
         }
