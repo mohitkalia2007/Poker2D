@@ -15,7 +15,7 @@ public class AlgorithmManager : MonoBehaviour
     [SerializeField] private Transform spawnPoint;
     public GameObject aiPlayerObject; // Reference to your AI player GameObject
     [SerializeField] float spacingMultiplier = .750f;
-    private List<GameObject> handCards = new();
+    public List<GameObject> handCards = new();
     int dispBal = 0;
     [SerializeField] private GameObject textPrefab;
     

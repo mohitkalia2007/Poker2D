@@ -191,9 +191,19 @@ public class PokerGame : MonoBehaviour
             bettingComplete = true;
             Debug.Log($"Number of players: {players.Count}");
             
+            // Remove folded players from the game
+            players.RemoveAll(p => p.LastAction == Player.PlayerAction.Fold);
+
+            // If only one player remains, they win
+            if (players.Count == 1)
+            {
+                Debug.Log($"Only one player remains - Player wins!");
+                return;
+            }
+            
             foreach (Player player in players.ToList())
             {
-                if (!player.IsTurn || player.LastAction == Player.PlayerAction.AllIn || player.LastAction == Player.PlayerAction.Fold)
+                if (!player.IsTurn || player.LastAction == Player.PlayerAction.AllIn)
                 {
                     Debug.Log($"Skipping player - IsTurn: {player.IsTurn}, LastAction: {player.LastAction}");
                     continue;
@@ -215,7 +225,7 @@ public class PokerGame : MonoBehaviour
                         bettingComplete = false;
                     }
                     
-                    if (player.LastAction == Player.PlayerAction.AllIn || player.LastAction == Player.PlayerAction.Fold)
+                    if (player.LastAction == Player.PlayerAction.AllIn)
                     {
                         player.IsTurn = false;
                     }
@@ -331,13 +341,10 @@ public class PokerGame : MonoBehaviour
     public void ShowDown() // reveal all cards and declare winner and split pot
     {
         Debug.Log("showdown");
-        foreach (Player m in players)
+        foreach (AlgorithmManager g in GameObject.FindObjectsOfType<AlgorithmManager>())
         {
-            if (m is AlgorithmPlayer player)
-            {
-                player.Hand[0].IsFaceUp = true;
-                player.Hand[1].IsFaceUp = true;
-            }
+            g.handCards[0].GetComponent<PokerCard>().IsFaceUp = true;
+            g.GetComponent<PokerCard>().IsFaceUp = true;
         }
         foreach (var player in players)
         {

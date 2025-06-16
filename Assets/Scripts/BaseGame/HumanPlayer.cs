@@ -16,9 +16,8 @@ namespace BaseGame
         [SerializeField] private Button foldButton;
         [SerializeField] private Button checkButton;
         [SerializeField] private Button callButton;
-        [SerializeField] private Button raiseButton;
         [SerializeField] private Button allInButton;
-        [SerializeField] private TMP_InputField raiseInput;
+        [SerializeField] private TMP_InputField raiseInput; // Keep only the input field for raise
         
         private TaskCompletionSource<int> betTaskSource;
         private bool isWaitingForAction = false;
@@ -32,12 +31,14 @@ namespace BaseGame
             playerHand.Add(cards[0]);
             playerHand.Add(cards[1]);
 
-            // Set up button listeners
+            // Set up button listeners (remove raise button listener)
             foldButton.onClick.AddListener(Fold);
             checkButton.onClick.AddListener(Check);
             callButton.onClick.AddListener(Call);
-            raiseButton.onClick.AddListener(Raise);
             allInButton.onClick.AddListener(AllIn);
+
+            // Add input field enter/submit handler
+            raiseInput.onSubmit.AddListener(HandleRaiseInput);
 
             SetButtonsInteractable(false);
         }
@@ -68,12 +69,15 @@ namespace BaseGame
                 SetButtonsInteractable(false);
                 return;
             }
+
             // Enable/disable buttons based on valid actions
             foldButton.interactable = true;
             checkButton.interactable = minimumBet == 0 || minimumBet == CurrentBet;
             callButton.interactable = minimumBet > 0 && minimumBet > CurrentBet && Balance >= (minimumBet - CurrentBet);
-            raiseButton.interactable = Balance > minimumBet;
             allInButton.interactable = Balance > 0;
+            
+            // Enable/disable raise input field instead of button
+            raiseInput.interactable = Balance > minimumBet;
         }
 
         private void SetButtonsInteractable(bool interactable)
@@ -81,8 +85,8 @@ namespace BaseGame
             foldButton.interactable = interactable;
             checkButton.interactable = interactable;
             callButton.interactable = interactable;
-            raiseButton.interactable = interactable;
             allInButton.interactable = interactable;
+            raiseInput.interactable = interactable;
         }
 
         private void Fold()
@@ -126,15 +130,23 @@ namespace BaseGame
             Debug.Log($"Player called {callAmount}");
         }
 
-        private void Raise()
+        private void HandleRaiseInput(string value)
         {
-            if (!isWaitingForAction || raiseInput == null) return;
+            if (!isWaitingForAction || string.IsNullOrEmpty(value)) return;
 
-            if (int.TryParse(raiseInput.text, out int raiseAmount))
+            if (int.TryParse(value, out int raiseAmount))
             {
-                if (raiseAmount > Balance || raiseAmount <= minimumBet)
+                if (raiseAmount > Balance)
                 {
-                    Debug.LogWarning("Invalid raise amount");
+                    Debug.LogWarning("Cannot raise more than balance");
+                    raiseInput.text = "";
+                    return;
+                }
+                
+                if (raiseAmount <= minimumBet)
+                {
+                    Debug.LogWarning($"Must raise more than minimum bet ({minimumBet})");
+                    raiseInput.text = "";
                     return;
                 }
 
@@ -146,6 +158,11 @@ namespace BaseGame
                 SetButtonsInteractable(false);
                 betTaskSource?.SetResult(CurrentBet);
                 Debug.Log($"Player raised to {raiseAmount}");
+            }
+            else
+            {
+                Debug.LogWarning("Invalid raise amount");
+                raiseInput.text = "";
             }
         }
 
