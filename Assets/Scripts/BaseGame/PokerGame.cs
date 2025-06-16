@@ -326,8 +326,6 @@ public class PokerGame : MonoBehaviour
                 
                 await Task.Delay(1000);
                 ShowDown();
-                await Task.Delay(5000);
-                SceneManager.LoadScene("WinnerScene");
                 Debug.Log("ShowDown complete");
             }
             catch (Exception e)
@@ -336,13 +334,23 @@ public class PokerGame : MonoBehaviour
             }
         }
     }
-    public void ShowDown() // reveal all cards and declare winner and split pot
+    public async void ShowDown() // reveal all cards and declare winner and split pot
     {
         Debug.Log("showdown");
         foreach (AlgorithmManager g in GameObject.FindObjectsOfType<AlgorithmManager>())
         {
             g.handCards[0].GetComponent<PokerCard>().IsFaceUp = true;
             g.handCards[1].GetComponent<PokerCard>().IsFaceUp = true;
+        }
+        List<Player> winners = round.DeclareWinner(players);
+        await Task.Delay(5000);
+        if (winners.ElementAt(0) is HumanPlayer)
+        {
+            SceneManager.LoadScene("WinnerScene");
+        }
+        else
+        {
+            
         }
         foreach (var player in players)
         {
