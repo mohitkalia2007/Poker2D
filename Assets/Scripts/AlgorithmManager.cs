@@ -19,10 +19,12 @@ public class AlgorithmManager : MonoBehaviour
     int dispBal = 0;
     [SerializeField] private GameObject textPrefab; // Assign TMP prefab in inspector
     private TMP_Text balanceText;
+    public Canvas canvas;
     void Start()
     {
         // Initialize the TextMeshPro
-        GameObject textObj = Instantiate(textPrefab, Vector3.zero, Quaternion.identity);
+        canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+        GameObject textObj = Instantiate(textPrefab, Vector3.zero, Quaternion.identity, canvas.transform);
         balanceText = textObj.GetComponent<TMP_Text>();
         
         if (balanceText == null)
@@ -33,7 +35,7 @@ public class AlgorithmManager : MonoBehaviour
 
         // Initial setup of the text
         balanceText.alignment = TextAlignmentOptions.Center;
-        balanceText.fontSize = 12;
+        balanceText.fontSize = 40;
         UpdateBalanceText();
     }
     void Update()
@@ -48,6 +50,7 @@ public class AlgorithmManager : MonoBehaviour
         Vector3 worldPosition = splineContainer.transform.TransformPoint(localPosition);
         
         // Update text position and content
+        Vector3 offset = new Vector3(-1f, 0f, 0f); // Adjust these values as needed
         balanceText.transform.position = worldPosition;
         UpdateBalanceText();
     }
