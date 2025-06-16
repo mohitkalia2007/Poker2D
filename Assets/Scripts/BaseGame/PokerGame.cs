@@ -51,7 +51,7 @@ public class PokerGame : MonoBehaviour
         {
             string splineName = $"AlgorithmSpline {i}";
             GameObject splineObj = GameObject.Find(splineName);
-            
+
             if (splineObj != null)
             {
                 SplineContainer spline = splineObj.GetComponent<SplineContainer>();
@@ -76,7 +76,7 @@ public class PokerGame : MonoBehaviour
             Debug.LogError($"Not enough splines found! Need {algorithmPlayerCount} but only found {availableSplines.Count}");
             return;
         }
-         // Create AI players
+        // Create AI players
         for (int i = 0; i < algorithmPlayerCount; i++)
         {
             GameObject newAlgorithmPlayer = Instantiate(algorithmPlayer);
@@ -88,46 +88,16 @@ public class PokerGame : MonoBehaviour
                 Debug.Log($"Setting up manager {i} with spline {i}");
                 manager.splineContainer = availableSplines[i];
                 manager.aiPlayerObject = newAlgorithmPlayer;
-                
+
                 if (manager.splineContainer == null)
                 {
                     Debug.LogError($"Failed to assign spline {i} to manager");
                 }
             }
-            
+
             players.Add(newAlgorithmPlayer.GetComponent<AlgorithmPlayer>());
             managers.Add(newManager);
         }
-        // for (int i = 0; i < algorithmPlayerCount; i++)
-        // {
-        //     GameObject newAlgorithmPlayer = Instantiate(algorithmPlayer);
-        //     GameObject newManager = Instantiate(algorithmPlayerManager);  // Create new variable for instance
-
-        //     AlgorithmManager manager = newManager.GetComponent<AlgorithmManager>();
-
-        //     if (manager != null && manager.GetComponent<AlgorithmManager>() != null && i < availableSplines.Count)
-        //     {
-        //         Debug.Log($"Assigning spline {i} to manager");
-        //         manager.splineContainer = availableSplines[i];
-        //         manager.aiPlayerObject = newAlgorithmPlayer;
-        //         newManager.GetComponent<AlgorithmManager>().aiPlayerObject = newAlgorithmPlayer;
-        //         // Verify assignment
-        //         if (manager.splineContainer != null)
-        //         {
-        //             Debug.Log($"Successfully assigned spline to manager {i}");
-        //         }
-        //         else
-        //         {
-        //             Debug.LogError($"Failed to assign spline to manager {i}");
-        //         }
-        //     }
-        //     else
-        //     {
-        //         Debug.LogError($"Either manager component not found or no spline available at index {i}");
-        //     }
-        //     players.Add(newAlgorithmPlayer.GetComponent<AlgorithmPlayer>());
-        //     managers.Add(newManager);
-        // }
 
         foreach (Player player in players)
         {
@@ -195,36 +165,11 @@ public class PokerGame : MonoBehaviour
         {
             m.GetComponent<AlgorithmManager>().DisplayAIHand();
         }
-        
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && !preflopDone)
-        {
-            PreFlop();
-            preflopDone = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2) && preflopDone && !flopDone)
-        {
-            Flop();
-            flopDone = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3) && flopDone && !turnDone)
-        {
-            Turn();
-            turnDone = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4) && turnDone && !riverDone)
-        {
-            River();
-            riverDone = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha5) && riverDone && !showdownDone)
-        {
-            ShowDown();
-            showdownDone = true;
-        }
+        round.NextCard();
+        round.NextCard();
+        round.NextCard();
+        round.NextCard();
+        round.NextCard();
     }
     private void ProcessBettingRound(BettingRound bettingRound)
     {
@@ -267,21 +212,16 @@ public class PokerGame : MonoBehaviour
     {
         bettingRound = BettingRound.PreFlop;
         ProcessBettingRound(BettingRound.PreFlop);
-        round.NextCard();
-        round.NextCard();
-        round.NextCard();
     }
     public void Flop() //betting round after first three cards are revealed
     {
         bettingRound = BettingRound.Flop;
         ProcessBettingRound(BettingRound.Flop);
-        round.NextCard();
     }
     public void Turn() //betting round before final card reveal
     {
         bettingRound = BettingRound.Turn;
         ProcessBettingRound(BettingRound.Turn);
-        round.NextCard();
     }
     public void River() //final betting round
     {
