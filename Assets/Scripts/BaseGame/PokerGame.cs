@@ -247,6 +247,9 @@ public class PokerGame : MonoBehaviour
         round.NextCard();
         round.NextCard();
         round.NextCard();
+        communityManager.handCards[0].GetComponent<PokerCard>().IsFaceUp = true;
+        communityManager.handCards[1].GetComponent<PokerCard>().IsFaceUp = true;
+        communityManager.handCards[2].GetComponent<PokerCard>().IsFaceUp = true;
         bettingRound = BettingRound.Flop;
         foreach (Player p in players)
         {
