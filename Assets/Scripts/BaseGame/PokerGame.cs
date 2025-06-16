@@ -326,8 +326,6 @@ public class PokerGame : MonoBehaviour
                 
                 await Task.Delay(1000);
                 ShowDown();
-                await Task.Delay(5000);
-                SceneManager.LoadScene("WinnerScene");
                 Debug.Log("ShowDown complete");
             }
             catch (Exception e)
@@ -343,6 +341,16 @@ public class PokerGame : MonoBehaviour
         {
             g.handCards[0].GetComponent<PokerCard>().IsFaceUp = true;
             g.handCards[1].GetComponent<PokerCard>().IsFaceUp = true;
+        }
+        List<Players> winners = round.DeclareWinner(players);
+        await Task.Delay(5000);
+        if (winners.ElementAt(0) is HumanPlayer)
+        {
+            SceneManager.LoadScene("WinnerScene");
+        }
+        else
+        {
+            
         }
         foreach (var player in players)
         {
