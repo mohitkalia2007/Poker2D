@@ -13,7 +13,7 @@ namespace BaseGame
         protected bool areCardsShowing = false;
         protected bool inGame = true;
         protected PokerCard[] cards = new PokerCard[2];
-        private bool isTurn;
+        private bool isTurn = true;
         public enum PlayerAction
         {
             Fold, Check, Call, Raise, AllIn

@@ -26,37 +26,38 @@ namespace BaseGame
 
             // Get pot size and number of active players
             int potSize = pots.Amount;
-            
+
             GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag("Player");
             int activePlayers = taggedObjects.Length;
 
             // Get minimum bet required to call
             int minBet = game.currentBet;
-            
+
             // Conservative baseline strategy based on EHS, pot odds and number of players
             if (ehs > 0.8) // Very strong hand
             {
                 // Raise 3x pot if few players, 2x if many players
-                if (activePlayers <= 3) return Math.Max(minBet, potSize * 3);
-                else return Math.Max(minBet, potSize * 2);
+                if (activePlayers <= 3) Raise(Math.Max(minBet, potSize * 3));
+                else Raise(Math.Max(minBet, potSize * 2));
             }
             else if (ehs > 0.6) // Strong hand
             {
                 // Raise 2x minimum bet with few players, call with many
-                if (activePlayers <= 3) return Math.Max(minBet, minBet * 2);
-                else return minBet;
+                if (activePlayers <= 3) Raise(Math.Max(minBet, potSize * 2));
+                else Call(minBet);
             }
             else if (ehs > 0.4) // Medium strength hand
             {
                 // Call if pot odds are good (pot size > 5x min bet)
-                if (potSize > (minBet * 5)) return minBet;
-                else return 0; // Fold
+                if (potSize > (minBet * 5)) Call(minBet);
+                else Fold(); // Fold
             }
             else // Weak hand
             {
-                if (minBet == 0) return 0;// Free to check
-                else return 0; //fold
+                if (minBet == 0) Check();// Free to check
+                else Fold(); //fold
             }
+            return 1;
         }
         double EffectiveHS(PokerGame.BettingRound bettingRound) { //Returns a percentile value from 0-1 compared to all other posible hands
             if (bettingRound == PokerGame.BettingRound.PreFlop) return CurrHS();

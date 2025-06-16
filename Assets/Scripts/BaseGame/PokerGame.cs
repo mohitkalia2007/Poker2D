@@ -45,7 +45,6 @@ public class PokerGame : MonoBehaviour
     void Start()
     {
         communityManager = GameObject.Find("CommunityManager").GetComponent<CommunityManager>();
-        
         availableSplines.Clear();
         humanPlayer = GameObject.FindWithTag("Player");
         players.Add(humanPlayer.GetComponent<HumanPlayer>());
@@ -61,7 +60,6 @@ public class PokerGame : MonoBehaviour
                 if (spline != null)
                 {
                     availableSplines.Add(spline);
-                    Debug.Log($"Successfully found and added {splineName}");
                 }
                 else
                 {
@@ -88,7 +86,6 @@ public class PokerGame : MonoBehaviour
 
             if (manager != null)
             {
-                Debug.Log($"Setting up manager {i} with spline {i}");
                 manager.splineContainer = availableSplines[i];
                 manager.aiPlayerObject = newAlgorithmPlayer;
 
@@ -105,8 +102,6 @@ public class PokerGame : MonoBehaviour
         foreach (Player player in players)
         {
             player.Balance = InputFieldHandler.savedInteger;
-            Debug.Log("yeah");
-            Debug.Log(player.Balance);
         }
         for (int i = 0; i < deck.GetLength(0); i++)
         {
@@ -163,7 +158,6 @@ public class PokerGame : MonoBehaviour
             } while (true);
         }
         round.HouseHand = houseHand;
-        Debug.Log(players.Count());
         foreach (GameObject m in managers)
         {
             m.GetComponent<AlgorithmManager>().DisplayAIHand();
@@ -171,6 +165,41 @@ public class PokerGame : MonoBehaviour
         foreach (PokerCard c in round.HouseHand)
         {
             communityManager.GetComponent<CommunityManager>().DrawCard(c.GetSuit(), c.GetCardNumber());
+        }
+    }
+    private bool keyNotPress = true;
+    void Update()
+    {
+        // Check if the current betting round is complete and move to the next one
+        if (Input.GetKeyDown(KeyCode.Space) && keyNotPress)
+        {
+            Debug.Log("PreFlop");
+            PreFlop();
+            keyNotPress = false;
+            preflopDone = true;
+        }
+        else if (preflopDone && !flopDone && !turnDone && !riverDone && !showdownDone)
+        {
+            Debug.Log("Flop");
+            Flop();
+            flopDone = true;
+        }
+        else if (preflopDone && flopDone && !turnDone && !riverDone && !showdownDone)
+        {
+            Debug.Log("Turn");
+            Turn();
+            turnDone = true;
+        }
+        else if (preflopDone && flopDone && turnDone && !riverDone && !showdownDone)
+        {
+            Debug.Log("River");
+            River();
+            riverDone = true;
+        }
+        else if (preflopDone && flopDone && turnDone && riverDone && !showdownDone)
+        {
+            ShowDown();
+            showdownDone = true;
         }
     }
     private void ProcessBettingRound(BettingRound bettingRound)
@@ -184,13 +213,17 @@ public class PokerGame : MonoBehaviour
         while (!bettingComplete)
         {
             bettingComplete = true;
+            Debug.Log(players.Count());
 
             foreach (Player player in players)
             {
+                Debug.Log("player");
                 if (!player.IsTurn || player.LastAction == Player.PlayerAction.AllIn) continue;  // Skip players who have folded or are all-in
+                Debug.Log("player");
 
                 player.MakeBet(bettingRound, currentBet, pots);  // This will trigger the player's UI or AI decision 
-
+                Debug.Log(player.CurrentBet);
+                Debug.Log(player.LastAction);
                 // Handle the player's decision (this will be received through events/callbacks)
                 if (player.CurrentBet > currentBet)
                 {
@@ -203,12 +236,6 @@ public class PokerGame : MonoBehaviour
                 }
             }
         }
-    }
-    bool AnyoneIsAllIn()
-    {
-        int count = 0;
-        foreach (var player in players) if (player.LastAction == Player.PlayerAction.AllIn) count++; 
-        return count > 0;
     }
     public void PreFlop() //betting round before any cards are revealed
     {
@@ -241,10 +268,13 @@ public class PokerGame : MonoBehaviour
     }
     public void ShowDown() // reveal all cards and declare winner and split pot
     {
-        foreach (GameObject m in managers)
+        foreach (Player m in players)
         {
-            m.GetComponent<AlgorithmPlayer>().Hand[0].IsFaceUp = true;
-            m.GetComponent<AlgorithmPlayer>().Hand[1].IsFaceUp = true;
+            if (m is AlgorithmPlayer player)
+            {
+                player.Hand[0].IsFaceUp = true;
+                player.Hand[1].IsFaceUp = true;   
+            }
         }
         foreach (var player in players)
         {
