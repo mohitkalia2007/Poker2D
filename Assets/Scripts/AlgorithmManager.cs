@@ -50,8 +50,8 @@ public class AlgorithmManager : MonoBehaviour
         Vector3 worldPosition = splineContainer.transform.TransformPoint(localPosition);
         
         // Update text position and content
-        Vector3 offset = new Vector3(-1f, 0f, 0f); // Adjust these values as needed
-        balanceText.transform.position = worldPosition;
+        Vector3 offset = new Vector3(-1.2f, 0f, 0f); // Adjust these values as needed
+        balanceText.transform.position = worldPosition +offset;
         UpdateBalanceText();
     }
 
