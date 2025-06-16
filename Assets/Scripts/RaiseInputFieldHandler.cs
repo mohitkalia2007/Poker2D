@@ -4,7 +4,12 @@ using UnityEngine;
 public class RaiseInputFieldHandler : MonoBehaviour
 {
     public static int raiseInput;
-    public HumanPlayer player = new HumanPlayer();
+    public HumanPlayer player;
+
+    public void Start()
+    {
+        player = FindFirstObjectByType<HumanPlayer>();
+    }
     
     public void GrabFromInputField(string input)
     {
