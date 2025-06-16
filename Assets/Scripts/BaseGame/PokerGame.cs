@@ -12,6 +12,7 @@ using UnityEngine.UI;
 using UnityEngine.XR;
 using UnityEngine.Splines;
 using System.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
 public class PokerGame : MonoBehaviour
 {
@@ -315,6 +316,7 @@ public class PokerGame : MonoBehaviour
                 
                 await Task.Delay(1000);
                 ShowDown();
+                SceneManager.LoadScene("WinnerScene");
                 Debug.Log("ShowDown complete");
             }
             catch (Exception e)

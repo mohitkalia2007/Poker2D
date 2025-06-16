@@ -68,13 +68,12 @@ namespace BaseGame
                 SetButtonsInteractable(false);
                 return;
             }
-
             // Enable/disable buttons based on valid actions
             foldButton.interactable = true;
-            checkButton.interactable = (minimumBet == 0 || minimumBet == CurrentBet);
-            callButton.interactable = (minimumBet > 0 && minimumBet > CurrentBet && Balance >= (minimumBet - CurrentBet));
-            raiseButton.interactable = (Balance > minimumBet);
-            allInButton.interactable = (Balance > 0);
+            checkButton.interactable = minimumBet == 0 || minimumBet == CurrentBet;
+            callButton.interactable = minimumBet > 0 && minimumBet > CurrentBet && Balance >= (minimumBet - CurrentBet);
+            raiseButton.interactable = Balance > minimumBet;
+            allInButton.interactable = Balance > 0;
         }
 
         private void SetButtonsInteractable(bool interactable)
