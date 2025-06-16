@@ -30,7 +30,6 @@ public class CardIdentity : MonoBehaviour
 		Sprite diamonds2 = deckOfCards[13], diamonds3 = deckOfCards[14], diamonds4 = deckOfCards[15], diamonds5 = deckOfCards[16], diamonds6 = deckOfCards[17], diamonds7 = deckOfCards[18], diamonds8 = deckOfCards[19], diamonds9 = deckOfCards[20], diamonds10 = deckOfCards[21], diamondsJack = deckOfCards[22], diamondsQueen = deckOfCards[23], diamondsKing = deckOfCards[24], diamondsAce = deckOfCards[25];
 		Sprite hearts2 = deckOfCards[26], hearts3 = deckOfCards[27], hearts4 = deckOfCards[28], hearts5 = deckOfCards[29], hearts6 = deckOfCards[30], hearts7 = deckOfCards[31], hearts8 = deckOfCards[32], hearts9 = deckOfCards[33], hearts10 = deckOfCards[34], heartsJack = deckOfCards[35], heartsQueen = deckOfCards[36], heartsKing = deckOfCards[37], heartsAce = deckOfCards[38];
 		Sprite spades2 = deckOfCards[39], spades3 = deckOfCards[40], spades4 = deckOfCards[41], spades5 = deckOfCards[42], spades6 = deckOfCards[43], spades7 = deckOfCards[44], spades8 = deckOfCards[45], spades9 = deckOfCards[46], spades10 = deckOfCards[47], spadesJack = deckOfCards[48], spadesQueen = deckOfCards[49], spadesKing = deckOfCards[50], spadesAce = deckOfCards[51];
-		//Image childImage = GetComponent<Image>();
 		if (sr == null || pokerCardScript == null) return;
 
 		if (!pokerCardScript.IsFaceUp)

@@ -33,7 +33,7 @@ public class CommunityManager : MonoBehaviour
         {
             return;
         }
-        float cardSpacing = 1f/maxHandSize;
+        float cardSpacing = 1.1f/maxHandSize;
         float firstCardPosition = 0.5f - (handCards.Count - 1) * cardSpacing / 2;
         Spline spline = splineContainer.Spline;
         for (int i = 0; i < handCards.Count; i++)

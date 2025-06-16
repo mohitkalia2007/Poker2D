@@ -13,6 +13,7 @@ public class AlgorithmManager : MonoBehaviour
     public SplineContainer splineContainer;
     [SerializeField] private Transform spawnPoint;
     public GameObject aiPlayerObject; // Reference to your AI player GameObject
+    [SerializeField] float spacingMultiplier = .750f;
 
     private List<GameObject> handCards = new();
 
@@ -49,8 +50,6 @@ public class AlgorithmManager : MonoBehaviour
     private void UpdateCardPositions()
     {
         if (handCards.Count == 0) return;
-
-        float spacingMultiplier = 0.5f;
         float totalWidth = spacingMultiplier;
         float startOffset = (1f - totalWidth) / 2f;
         float spacing = totalWidth / (handCards.Count + 1);
