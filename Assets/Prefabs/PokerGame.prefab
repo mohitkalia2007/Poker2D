@@ -56,11 +56,18 @@ MonoBehaviour:
   players: []
   managers: []
   currentBet: 0
+  preflopDone: 0
+  flopDone: 1
+  turnDone: 1
+  riverDone: 0
+  showdownDone: 0
   availableSplines:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  communityManager: {fileID: 0}
 --- !u!114 &6365122546632757268
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ public class CommunityManager : MonoBehaviour
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private SplineContainer splineContainer;
     [SerializeField] private Transform spawnPoint;
-    private List<GameObject> handCards = new();
+    public List<GameObject> handCards = new();
     public void DrawCard(string suit, int number)
     {
         if (handCards.Count >= maxHandSize)

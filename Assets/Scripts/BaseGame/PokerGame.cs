@@ -36,6 +36,7 @@ public class PokerGame : MonoBehaviour
     public bool riverDone = false;
     public bool showdownDone = false;
     [SerializeField] private List<SplineContainer> availableSplines = new List<SplineContainer>(); // Drag your splines here
+    public CommunityManager communityManager;
     public enum BettingRound
     {
         PreFlop, Flop, Turn, River
@@ -43,6 +44,8 @@ public class PokerGame : MonoBehaviour
     public BettingRound bettingRound { get; private set; }
     void Start()
     {
+        communityManager = GameObject.Find("CommunityManager").GetComponent<CommunityManager>();
+        
         availableSplines.Clear();
         humanPlayer = GameObject.FindWithTag("Player");
         players.Add(humanPlayer.GetComponent<HumanPlayer>());
@@ -215,16 +218,21 @@ public class PokerGame : MonoBehaviour
     }
     public void Flop() //betting round after first three cards are revealed
     {
+        communityManager.handCards[0].GetComponent<PokerCard>().IsFaceUp = true;
+        communityManager.handCards[1].GetComponent<PokerCard>().IsFaceUp = true;
+        communityManager.handCards[2].GetComponent<PokerCard>().IsFaceUp = true;
         bettingRound = BettingRound.Flop;
         ProcessBettingRound(BettingRound.Flop);
     }
     public void Turn() //betting round before final card reveal
     {
+        communityManager.handCards[3].GetComponent<PokerCard>().IsFaceUp = true;
         bettingRound = BettingRound.Turn;
         ProcessBettingRound(BettingRound.Turn);
     }
     public void River() //final betting round
     {
+        communityManager.handCards[4].GetComponent<PokerCard>().IsFaceUp = true;
         bettingRound = BettingRound.River;
         ProcessBettingRound(BettingRound.River);
     }

@@ -7,7 +7,7 @@ namespace BaseGame
 {
     public class Round : MonoBehaviour
     {
-        [SerializeField] GameObject communityManager;
+        [SerializeField] CommunityManager communityManager;
         private readonly System.Random random = new System.Random();
         public int minimumBet = 0;
         private string[] suit = { "diamonds", "spades", "hearts", "clubs" };
@@ -19,7 +19,7 @@ namespace BaseGame
         public void AddPlayer(Player player) { players.Add(player); }
         void Start()
         {
-            communityManager = GameObject.FindGameObjectWithTag("Manager");
+            communityManager = GameObject.Find("CommunityManager").GetComponent<CommunityManager>();
         }
         public void NextCard()
         {
