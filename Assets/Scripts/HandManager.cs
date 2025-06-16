@@ -14,21 +14,23 @@ public class HandManager : MonoBehaviour
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private GameObject humanPlayer;
     private List<GameObject> handCards = new();
+    public static event Action OnGameStart;
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            OnGameStart?.Invoke();
             for (int i = 0; i < 2; i++)
             {
                 HumanPlayer player = humanPlayer.GetComponent<HumanPlayer>();
                 String suit = player.Hand[i].GetSuit();
                 int num = player.Hand[i].GetCardNumber();
-                DrawCard(suit,num);
+                DrawCard(suit, num);
+
             }
         }
     }
-
     private void DrawCard(String suit, int number)
     {
         if (handCards.Count >= maxHandSize)
@@ -39,6 +41,7 @@ public class HandManager : MonoBehaviour
         PokerCard pokerCardScript = g.GetComponent<PokerCard>();
         pokerCardScript.SetSuit(suit);
         pokerCardScript.SetCardNumber(number);
+        pokerCardScript.IsFaceUp = true;
         handCards.Add(g);
         UpdateCardPositions();
     }
@@ -47,7 +50,7 @@ public class HandManager : MonoBehaviour
     {
         if (handCards.Count == 0) return;
 
-        float spacingMultiplier = 0.5f;
+        float spacingMultiplier = 1.25f;
         float totalWidth = spacingMultiplier;
         float startOffset = (1f - totalWidth) / 2f;
         float spacing = totalWidth / (handCards.Count + 1);

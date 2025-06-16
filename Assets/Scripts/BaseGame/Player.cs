@@ -4,6 +4,7 @@ using BaseGame;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using System.Threading.Tasks;
 
 namespace BaseGame
 {
@@ -16,7 +17,7 @@ namespace BaseGame
         private bool isTurn = true;
         public enum PlayerAction
         {
-            Fold, Check, Call, Raise, AllIn
+            Fold, Check, Call, Raise, AllIn, None
         }
         public bool IsTurn { get { return isTurn; } set { isTurn = value; } }
         public int Stack { get; set; }
@@ -93,7 +94,8 @@ namespace BaseGame
             }
             LastAction = PlayerAction.Check; CurrentBet = 0;
         }
-        public abstract int MakeBet(PokerGame.BettingRound bettingRound, int minimum, Pot pots);
+        public abstract Task<int> MakeBet(PokerGame.BettingRound bettingRound, int minimum, Pot pots);
+
         protected abstract int GetHighestCard();
     }
 }

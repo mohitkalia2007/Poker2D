@@ -11,6 +11,7 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using UnityEngine.XR;
 using UnityEngine.Splines;
+using System.Threading.Tasks;
 
 public class PokerGame : MonoBehaviour
 {
@@ -167,44 +168,18 @@ public class PokerGame : MonoBehaviour
             communityManager.GetComponent<CommunityManager>().DrawCard(c.GetSuit(), c.GetCardNumber());
         }
     }
-    private bool keyNotPress = true;
-    void Update()
+    private bool gameHasStarted = false;
+    void OnEnable()
     {
-        // Check if the current betting round is complete and move to the next one
-        if (Input.GetKeyDown(KeyCode.Space) && keyNotPress)
-        {
-            Debug.Log("PreFlop");
-            PreFlop();
-            keyNotPress = false;
-            preflopDone = true;
-        }
-        else if (preflopDone && !flopDone && !turnDone && !riverDone && !showdownDone)
-        {
-            Debug.Log("Flop");
-            Flop();
-            flopDone = true;
-        }
-        else if (preflopDone && flopDone && !turnDone && !riverDone && !showdownDone)
-        {
-            Debug.Log("Turn");
-            Turn();
-            turnDone = true;
-        }
-        else if (preflopDone && flopDone && turnDone && !riverDone && !showdownDone)
-        {
-            Debug.Log("River");
-            River();
-            riverDone = true;
-        }
-        else if (preflopDone && flopDone && turnDone && riverDone && !showdownDone)
-        {
-            ShowDown();
-            showdownDone = true;
-        }
+        HandManager.OnGameStart += OnGameStartHandler;
     }
-    private void ProcessBettingRound(BettingRound bettingRound)
+    void OnDisable()
     {
-        Console.WriteLine($"--- {bettingRound} Betting Round ---");
+        HandManager.OnGameStart -= OnGameStartHandler;
+    }
+    private async Task ProcessBettingRound(BettingRound bettingRound)
+    {
+        Debug.Log($"--- {bettingRound} Betting Round ---");
         currentBet = 0;
         if (bettingRound == BettingRound.PreFlop) currentBet = bigBlind;
 
@@ -213,67 +188,150 @@ public class PokerGame : MonoBehaviour
         while (!bettingComplete)
         {
             bettingComplete = true;
-            Debug.Log(players.Count());
-
-            foreach (Player player in players)
+            Debug.Log($"Number of players: {players.Count}");
+            
+            foreach (Player player in players.ToList())
             {
-                Debug.Log("player");
-                if (!player.IsTurn || player.LastAction == Player.PlayerAction.AllIn) continue;  // Skip players who have folded or are all-in
-                Debug.Log("player");
-
-                player.MakeBet(bettingRound, currentBet, pots);  // This will trigger the player's UI or AI decision 
-                Debug.Log(player.CurrentBet);
-                Debug.Log(player.LastAction);
-                // Handle the player's decision (this will be received through events/callbacks)
-                if (player.CurrentBet > currentBet)
+                if (!player.IsTurn || player.LastAction == Player.PlayerAction.AllIn || player.LastAction == Player.PlayerAction.Fold)
                 {
-                    currentBet = player.CurrentBet;
-                    bettingComplete = false;  // Need another round if someone raises
+                    Debug.Log($"Skipping player - IsTurn: {player.IsTurn}, LastAction: {player.LastAction}");
+                    continue;
                 }
-                if (player.LastAction == Player.PlayerAction.AllIn)
+               
+                try
                 {
-                    player.IsTurn = false;
+                    Debug.Log($"Player making bet - Current bet: {currentBet}");
+                    int playerBet = await player.MakeBet(bettingRound, currentBet, pots);
+
+                    // Wait a frame to allow Unity to process
+                    await Task.Yield();
+                    
+                    Debug.Log($"Player bet: {playerBet}, LastAction: {player.LastAction}");
+
+                    if (playerBet > currentBet)
+                    {
+                        currentBet = playerBet;
+                        bettingComplete = false;
+                    }
+                    
+                    if (player.LastAction == Player.PlayerAction.AllIn || player.LastAction == Player.PlayerAction.Fold)
+                    {
+                        player.IsTurn = false;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"Error processing player bet: {e.Message}");
                 }
             }
+
+            await Task.Delay(100);
         }
     }
-    public void PreFlop() //betting round before any cards are revealed
+
+    public async Task PreFlop()
     {
+        Debug.Log("Preflop");
         bettingRound = BettingRound.PreFlop;
-        ProcessBettingRound(BettingRound.PreFlop);
+        foreach (Player p in players)
+        {
+            p.IsTurn = true;
+            p.LastAction = Player.PlayerAction.None;
+        }
+        await ProcessBettingRound(BettingRound.PreFlop);
     }
-    public void Flop() //betting round after first three cards are revealed
+
+    public async Task Flop()
     {
         round.NextCard();
         round.NextCard();
         round.NextCard();
         bettingRound = BettingRound.Flop;
-        ProcessBettingRound(BettingRound.Flop);
+        foreach (Player p in players)
+        {
+            p.IsTurn = true;
+            p.LastAction = Player.PlayerAction.None;
+        }
+        await ProcessBettingRound(BettingRound.Flop);
     }
-    public void Turn() //betting round before final card reveal
+
+    public async Task Turn()
     {
         round.NextCard();
         communityManager.handCards[3].GetComponent<PokerCard>().IsFaceUp = true;
         bettingRound = BettingRound.Turn;
-        ProcessBettingRound(BettingRound.Turn);   
-
+        foreach (Player p in players)
+        {
+            p.IsTurn = true;
+            p.LastAction = Player.PlayerAction.None;
+        }
+        await ProcessBettingRound(BettingRound.Turn);
     }
-    public void River() //final betting round
+
+    public async Task River()
     {
         round.NextCard();
         communityManager.handCards[4].GetComponent<PokerCard>().IsFaceUp = true;
         bettingRound = BettingRound.River;
-        ProcessBettingRound(BettingRound.River);
-    
+        foreach (Player p in players)
+        {
+            p.IsTurn = true;
+            p.LastAction = Player.PlayerAction.None;
+        }
+        await ProcessBettingRound(BettingRound.River);
+    }
+
+    private async void OnGameStartHandler()
+    {
+        if (!gameHasStarted)
+        {
+            try
+            {
+                gameHasStarted = true;
+                Debug.Log("Game Started!");
+                
+                foreach (Player p in players)
+                {
+                    p.IsTurn = true;
+                    p.LastAction = Player.PlayerAction.None;
+                }
+
+                await Task.Delay(1000);
+                // Properly await each betting round
+                await PreFlop();
+                Debug.Log("PreFlop complete");
+                
+                await Task.Delay(1000);
+                await Flop();
+                Debug.Log("Flop complete");
+                
+                await Task.Delay(1000);
+                await Turn();
+                Debug.Log("Turn complete");
+                
+                await Task.Delay(1000);
+                await River();
+                Debug.Log("River complete");
+                
+                await Task.Delay(1000);
+                ShowDown();
+                Debug.Log("ShowDown complete");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Error in game sequence: {e.Message}\n{e.StackTrace}");
+            }
+        }
     }
     public void ShowDown() // reveal all cards and declare winner and split pot
     {
+        Debug.Log("showdown");
         foreach (Player m in players)
         {
             if (m is AlgorithmPlayer player)
             {
                 player.Hand[0].IsFaceUp = true;
-                player.Hand[1].IsFaceUp = true;   
+                player.Hand[1].IsFaceUp = true;
             }
         }
         foreach (var player in players)

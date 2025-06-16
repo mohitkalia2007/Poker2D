@@ -8,18 +8,20 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using System.Threading.Tasks;
 
 
 namespace BaseGame
 {
     public class AlgorithmPlayer : Player 
     {
+        public GameObject gameObject;
         PokerGame game;
         void Start()
         {
             game = GameObject.FindGameObjectWithTag("GameController").GetComponent<PokerGame>();
         }
-        public override int MakeBet(PokerGame.BettingRound bettingRound, int minimum, Pot pots) // Makes a bet based on effective hand strength, pot size, and amount of time spent 
+        public override async Task<int> MakeBet(PokerGame.BettingRound bettingRound, int minimum, Pot pots)
         {
             // Calculate effective hand strength based on current cards
             double ehs = EffectiveHS(bettingRound);
@@ -32,32 +34,70 @@ namespace BaseGame
 
             // Get minimum bet required to call
             int minBet = game.currentBet;
+            int betAmount = 0;
 
             // Conservative baseline strategy based on EHS, pot odds and number of players
             if (ehs > 0.8) // Very strong hand
             {
                 // Raise 3x pot if few players, 2x if many players
-                if (activePlayers <= 3) Raise(Math.Max(minBet, potSize * 3));
-                else Raise(Math.Max(minBet, potSize * 2));
+                if (activePlayers <= 3)
+                {
+                    betAmount = Math.Max(minBet, potSize * 3);
+                    Raise(betAmount);
+                }
+                else
+                {
+                    betAmount = Math.Max(minBet, potSize * 2);
+                    Raise(betAmount);
+                }
             }
             else if (ehs > 0.6) // Strong hand
             {
                 // Raise 2x minimum bet with few players, call with many
-                if (activePlayers <= 3) Raise(Math.Max(minBet, potSize * 2));
-                else Call(minBet);
+                if (activePlayers <= 3)
+                {
+                    betAmount = Math.Max(minBet, potSize * 2);
+                    Raise(betAmount);
+                }
+                else
+                {
+                    betAmount = minBet;
+                    Call(betAmount);
+                }
             }
             else if (ehs > 0.4) // Medium strength hand
             {
                 // Call if pot odds are good (pot size > 5x min bet)
-                if (potSize > (minBet * 5)) Call(minBet);
-                else Fold(); // Fold
+                if (potSize > (minBet * 5))
+                {
+                    betAmount = minBet;
+                    Call(betAmount);
+                }
+                else
+                {
+                    betAmount = 0;
+                    Fold(); // Fold
+                }
             }
             else // Weak hand
             {
-                if (minBet == 0) Check();// Free to check
-                else Fold(); //fold
+                if (minBet == 0)
+                {
+                    betAmount = 0;
+                    Check(); // Free to check
+                }
+                else
+                {
+                    betAmount = 0;
+                    Fold(); // fold
+                }
             }
-            return 1;
+
+            // Add a small delay to simulate "thinking"
+            await Task.Delay(500);
+            
+            Debug.Log($"AI player bet: {betAmount}, EHS: {ehs}");
+            return betAmount;
         }
         double EffectiveHS(PokerGame.BettingRound bettingRound) { //Returns a percentile value from 0-1 compared to all other posible hands
             if (bettingRound == PokerGame.BettingRound.PreFlop) return CurrHS();
@@ -223,10 +263,10 @@ namespace BaseGame
             string[] suits = { "diamonds", "spades", "hearts", "clubs" };
 
             for (int i = 0; i < 4; i++)
-                for (int j = 0; j < 13; i++)
+                for (int j = 0; j < 13; j++)
                 {
-                    deck[i*j] = new PokerCard();
-                    deck[i * j].Init(j + 2, suits[i]);
+                    deck[i * j] = Instantiate(gameObject).GetComponent<PokerCard>();
+                    deck[i * j].Init(j+2, suits[i]);
                 }
                     
             for (int i = 0; i < 4; i++)
