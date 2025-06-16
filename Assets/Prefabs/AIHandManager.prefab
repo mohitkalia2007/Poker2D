@@ -50,6 +50,8 @@ MonoBehaviour:
   splineContainer: {fileID: 0}
   spawnPoint: {fileID: 0}
   aiPlayerObject: {fileID: 0}
+  spacingMultiplier: 0.75
+  textPrefab: {fileID: 4611460091485939166, guid: 0c61effd99eb1e34991bb5528dd2d3c3, type: 3}
 --- !u!1 &7183194049715792284
 GameObject:
   m_ObjectHideFlags: 0
