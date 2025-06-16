@@ -18,7 +18,11 @@ public class UpdateBalScript : MonoBehaviour
         {
             pokerGame = pokerGameObj.GetComponent<PokerGame>();
             potBalance.text = "Pot: $" + pokerGame.pots.ToString();
-            
+
+        }
+        else
+        {
+            potBalance.text = "Pot: $0";
         }
     }
 
@@ -34,6 +38,9 @@ public class UpdateBalScript : MonoBehaviour
             pokerGame = pokerGameObj.GetComponent<PokerGame>();
             potBalance.text = "Pot: $" + pokerGame.pots.ToString();
             
+        }else
+        {
+            potBalance.text = "Pot: $0";
         }
 
     }
