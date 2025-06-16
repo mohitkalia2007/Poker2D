@@ -350,7 +350,7 @@ public class PokerGame : MonoBehaviour
         }
         else
         {
-            
+            SceneManager.LoadScene("LosingScene");
         }
         foreach (var player in players)
         {
