@@ -23,6 +23,11 @@ namespace BaseGame
         }
         public override async Task<int> MakeBet(PokerGame.BettingRound bettingRound, int minimum, Pot pots)
         {
+            if (bettingRound == PokerGame.BettingRound.PreFlop)
+            {
+                Call(minimum);
+                return minimum;
+            }
             // Calculate effective hand strength based on current cards
             double ehs = EffectiveHS(bettingRound);
 

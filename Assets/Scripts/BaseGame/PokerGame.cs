@@ -218,7 +218,7 @@ public class PokerGame : MonoBehaviour
                     await Task.Yield();
                     
                     Debug.Log($"Player bet: {playerBet}, LastAction: {player.LastAction}");
-
+                    pots.Amount += playerBet;
                     if (playerBet > currentBet)
                     {
                         currentBet = playerBet;
@@ -344,7 +344,7 @@ public class PokerGame : MonoBehaviour
         foreach (AlgorithmManager g in GameObject.FindObjectsOfType<AlgorithmManager>())
         {
             g.handCards[0].GetComponent<PokerCard>().IsFaceUp = true;
-            g.GetComponent<PokerCard>().IsFaceUp = true;
+            g.handCards[1].GetComponent<PokerCard>().IsFaceUp = true;
         }
         foreach (var player in players)
         {
