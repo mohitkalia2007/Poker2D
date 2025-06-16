@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Splines;
 using BaseGame;
+using TMPro;
 
 public class AlgorithmManager : MonoBehaviour
 {
@@ -14,9 +15,50 @@ public class AlgorithmManager : MonoBehaviour
     [SerializeField] private Transform spawnPoint;
     public GameObject aiPlayerObject; // Reference to your AI player GameObject
     [SerializeField] float spacingMultiplier = .750f;
-
     private List<GameObject> handCards = new();
+    int dispBal = 0;
+    [SerializeField] private GameObject textPrefab; // Assign TMP prefab in inspector
+    private TMP_Text balanceText;
+    void Start()
+    {
+        // Initialize the TextMeshPro
+        GameObject textObj = Instantiate(textPrefab, Vector3.zero, Quaternion.identity);
+        balanceText = textObj.GetComponent<TMP_Text>();
+        
+        if (balanceText == null)
+        {
+            Debug.LogError("TextMeshPro component not found on prefab!");
+            return;
+        }
 
+        // Initial setup of the text
+        balanceText.alignment = TextAlignmentOptions.Center;
+        balanceText.fontSize = 12;
+        UpdateBalanceText();
+    }
+    void Update()
+    {
+        if (aiPlayerObject == null || balanceText == null) return;
+
+        AlgorithmPlayer p = aiPlayerObject.GetComponent<AlgorithmPlayer>();
+        dispBal = p.Balance;
+
+        // Get the position at the start of the spline (t=0)
+        Vector3 localPosition = splineContainer.Spline.EvaluatePosition(0);
+        Vector3 worldPosition = splineContainer.transform.TransformPoint(localPosition);
+        
+        // Update text position and content
+        balanceText.transform.position = worldPosition;
+        UpdateBalanceText();
+    }
+
+    private void UpdateBalanceText()
+    {
+        if (balanceText != null)
+        {
+            balanceText.text = $"Balance: ${dispBal}";
+        }
+    }
     // Call this from your game logic
     public void DisplayAIHand()
     {
@@ -53,7 +95,7 @@ public class AlgorithmManager : MonoBehaviour
         float totalWidth = spacingMultiplier;
         float startOffset = (1f - totalWidth) / 2f;
         float spacing = totalWidth / (handCards.Count + 1);
-
+        
         Spline spline = splineContainer.Spline;
 
         for (int i = 0; i < handCards.Count; i++)
