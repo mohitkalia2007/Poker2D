@@ -30,11 +30,11 @@ public class PokerGame : MonoBehaviour
     string[] suits = { "diamonds", "spades", "hearts", "clubs" };
     private readonly System.Random random = new System.Random();
     public int currentBet = 0;
-    private bool preflopDone = false;
-    private bool flopDone = false;
-    private bool turnDone = false;
-    private bool riverDone = false;
-    private bool showdownDone = false;
+    public bool preflopDone = false;
+    public bool flopDone = false;
+    public bool turnDone = false;
+    public bool riverDone = false;
+    public bool showdownDone = false;
     [SerializeField] private List<SplineContainer> availableSplines = new List<SplineContainer>(); // Drag your splines here
     public enum BettingRound
     {
@@ -263,7 +263,7 @@ public class PokerGame : MonoBehaviour
         foreach (var player in players) if (player.LastAction == Player.PlayerAction.AllIn) count++; 
         return count > 0;
     }
-    void PreFlop() //betting round before any cards are revealed
+    public void PreFlop() //betting round before any cards are revealed
     {
         bettingRound = BettingRound.PreFlop;
         ProcessBettingRound(BettingRound.PreFlop);
@@ -271,24 +271,24 @@ public class PokerGame : MonoBehaviour
         round.NextCard();
         round.NextCard();
     }
-    void Flop() //betting round after first three cards are revealed
+    public void Flop() //betting round after first three cards are revealed
     {
         bettingRound = BettingRound.Flop;
         ProcessBettingRound(BettingRound.Flop);
         round.NextCard();
     }
-    void Turn() //betting round before final card reveal
+    public void Turn() //betting round before final card reveal
     {
         bettingRound = BettingRound.Turn;
         ProcessBettingRound(BettingRound.Turn);
         round.NextCard();
     }
-    void River() //final betting round
+    public void River() //final betting round
     {
         bettingRound = BettingRound.River;
         ProcessBettingRound(BettingRound.River);
     }
-    void ShowDown() // reveal all cards and declare winner and split pot
+    public void ShowDown() // reveal all cards and declare winner and split pot
     {
         foreach (GameObject m in managers)
         {
